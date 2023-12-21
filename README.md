@@ -1,14 +1,10 @@
-# prj_name
-Designed for ...  
+# pyqt_templates
+Pyqt help examples and some other useful objects (overloaded pyqt classes).  
+Designed for ....  
 
 
 ## Features
-1. feat1  
-2. feat2  
-3. feat3:  
-	- block1  
-	- block2  
-4. feat4  
+1. good template for TableView/Model  
 
 
 ********************************************************************************
@@ -22,13 +18,13 @@ See the [HISTORY.md](HISTORY.md) file for release history.
 
 ## Installation
 ```commandline
-pip install prj-name
+pip install pyqt-templates
 ```
 
 
 ## Import
 ```python
-from prj_name import *
+from pyqt_templates import *
 ```
 
 
@@ -39,7 +35,7 @@ See tests and sourcecode for other examples.
 ******************************
 ### 1. example1.py
 ```python
-from NEW_PROJECT____ import *
+from pyqt_templates import *
 
 
 # =====================================================================================================================

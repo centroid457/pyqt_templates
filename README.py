@@ -69,7 +69,8 @@ class Readme:
 
         LINES = [
             f"# {PROJECT.NAME_IMPORT}",
-            f"{PROJECT.DESCRIPTION_LONG}  ",
+            f"{PROJECT.DESCRIPTION_SHORT.capitalize()}.  ",
+            f"{PROJECT.DESCRIPTION_LONG.capitalize()}.  ",
 
             *FEATURES,
 

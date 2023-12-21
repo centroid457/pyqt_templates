@@ -9,19 +9,18 @@ class PROJECT:
     AUTHOR_HOMEPAGE: str = "https://github.com/centroid457/"
 
     # ------------------------------------------------------
-    NAME_INSTALL: str = "prj-name"
-    NAME_IMPORT: str = "prj_name"
+    NAME_INSTALL: str = "pyqt-templates"
+    NAME_IMPORT: str = "pyqt_templates"
     KEYWORDS: List[str] = [
-        "kw1",
+        "pyqt",
+        "pyqt templates", "pyqt guide",
+        "pyqt usage", "pyqt examples", "pyqt usage examples", "pyqt help", "pyqt help examples",
     ]
 
-    DESCRIPTION_SHORT: str = "description about pkg"
+    DESCRIPTION_SHORT: str = "pyqt help examples and some other useful objects (overloaded pyqt classes)"
     DESCRIPTION_LONG: str = "Designed for ..."
     FEATURES: List[str] = [
-        "feat1",
-        "feat2",
-        ["feat3", "block1", "block2"],
-        "feat4",
+        "good template for TableView/Model",
     ]
     WISHES: List[str] = [
         "add ..."

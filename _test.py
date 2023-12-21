@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 from typing import *
 from configparser import ConfigParser
 
-from NEW_PROJECT____ import *
+from pyqt_templates import *
 
 
 # =====================================================================================================================
