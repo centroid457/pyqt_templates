@@ -61,7 +61,7 @@ class Gui(QWidget):
             print(f"[FAIL]GUI({exit_code=})closed INCORRECTLY")
         sys.exit(exit_code)
 
-    # MAIN WINDOW -----------------------------------------------------------------------------------------------------
+    # MAIN WINDOW =====================================================================================================
     def wgt_main__apply_settings(self) -> None:
         self._wgt_main__apply_logo()
         self.setWindowTitle(self.TITLE)
@@ -119,7 +119,7 @@ class Gui(QWidget):
             display_central_point.y() - window_geometry.height()//2
         )
 
-    # WINDOW ----------------------------------------------------------------------------------------------------------
+    # WINDOW ==========================================================================================================
     def wgt_create(self) -> None:
         # GRID --------------------------------------------------------------------------------------------------------
         layout_grid = QGridLayout()
@@ -144,6 +144,15 @@ class Gui(QWidget):
     def btn_toggled(self, _state: Optional[bool] = None) -> None:
         print(f"btn {_state=}")
         self._wgt_main__center()
+
+    # EVENTS ==========================================================================================================
+    def moveEvent(self,  a0: Optional[QMoveEvent]) -> None:
+        # print(self.geometry().x(), self.geometry().y())
+        pass
+
+    def resizeEvent(self, a0: Optional[QResizeEvent]) -> None:
+        # print(self.size())
+        pass
 
 
 # =====================================================================================================================
