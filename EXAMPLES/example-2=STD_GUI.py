@@ -12,12 +12,14 @@ pass
 
 # =====================================================================================================================
 class Gui(QWidget):
+    TITLE: str = "[GUI] Universal"
     _QAPP: QApplication = QApplication([])
 
     def __init__(self):
         super().__init__()
 
         self.wgt_create()
+        self.wgt_main__apply_settings()
         self.slots_connect()
 
         # GUI SHOW ----------------------------------------------------------------------------------------------------
@@ -29,9 +31,9 @@ class Gui(QWidget):
             print(f"[FAIL]GUI({exit_code=})closed INCORRECTLY")
         sys.exit(exit_code)
 
-    def wgt_create(self) -> None:
+    def wgt_main__apply_settings(self) -> None:
         # MAIN WINDOW -------------------------------------------------------------------------------------------------
-        self.setWindowTitle("[GUI] Universal")
+        self.setWindowTitle(self.TITLE)
 
         self.setMinimumSize(300, 100)
         # self.setMinimumWidth(300)
@@ -39,6 +41,7 @@ class Gui(QWidget):
 
         self.resize(300, 100)
 
+    def wgt_create(self) -> None:
         # GRID --------------------------------------------------------------------------------------------------------
         layout_grid = QGridLayout()
         layout_grid.setSpacing(2)
@@ -57,9 +60,9 @@ class Gui(QWidget):
         self.setLayout(layout_main)
 
     def slots_connect(self) -> None:
-        self.btn_start.toggled.connect(self.start_toggled)
+        self.btn_start.toggled.connect(self.btn_toggled)
 
-    def start_toggled(self, _state: Optional[bool] = None) -> None:
+    def btn_toggled(self, _state: Optional[bool] = None) -> None:
         print(f"btn {_state=}")
 
 
