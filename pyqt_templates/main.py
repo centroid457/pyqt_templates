@@ -17,8 +17,29 @@ class Gui(QWidget):
     TITLE: str = "[GUI] Universal"
     LOGO: str = "logo.jpg"
     FLAGS: Dict[Any, str] = {
-        # COMMENT OUT NOT NEEDED!
-        # Qt.FramelessWindowHint: "hide title",
+        # UNCOMMENT IF NEEDED!
+        # values are just for information!
+        # if some flags overlays/conflict - used last activated
+
+        # BORDER/FRAME/TITLE ------------------------------------------------------------------
+        # Qt.FramelessWindowHint: "[frame]hide outer frame/border (with title), to tern back title add WindowTitleHint",
+        # Qt.WindowTitleHint: "[title]force turn on (after FramelessWindowHint) window title",
+        # Qt.CustomizeWindowHint: "[title]hide std frame border with title",
+
+        # GEOMETRY ----------------------------------------------------------------------------
+        # Qt.MSWindowsFixedSizeDialogHint: "[geometry]block window mouse resizing",
+
+        # BTNS --------------------------------------------------------------------------------
+        # Qt.WindowSystemMenuHint: "???[btn]deactivate all btns",
+        # Qt.WindowMinimizeButtonHint: "[btn]activate ONLY MINimize",
+        # Qt.WindowMaximizeButtonHint: "[btn]activate ONLY MAXimize",
+        # Qt.WindowMinMaxButtonsHint: "[btn]activate ONLY MAX+MINimize",
+        # Qt.WindowCloseButtonHint: "[btn]keep only CLOSE",
+        # Qt.WindowContextHelpButtonHint: "[btn]keep only HELP +CLOSE(but inactivated)",
+
+        # LAYERS -------------------------------------------------------------------------------
+        # Qt.WindowStaysOnTopHint: "[layer] always on TOP",
+        # Qt.WindowStaysOnBottomHint: "[layer] always on BOTTOM",
     }
 
     _QAPP: QApplication = QApplication([])
