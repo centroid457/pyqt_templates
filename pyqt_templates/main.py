@@ -14,7 +14,7 @@ pass
 
 # =====================================================================================================================
 class Gui(QWidget):
-    TITLE: str = "[GUI] Universal"
+    TITLE: str = "[GUI] Template"
     LOGO: str = "logo.jpg"
 
     SIZE_MINIMUM: List[Optional[int]] = [None, None]
