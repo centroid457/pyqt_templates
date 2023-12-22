@@ -24,6 +24,7 @@ class Gui(QWidget):
 
         # GUI SHOW ----------------------------------------------------------------------------------------------------
         self.show()
+        self.wgt_main__center()
         exit_code = self._QAPP.exec_()
         if exit_code == 0:
             print(f"[OK]GUI({exit_code=})closed correctly")
@@ -35,11 +36,15 @@ class Gui(QWidget):
         # MAIN WINDOW -------------------------------------------------------------------------------------------------
         self.setWindowTitle(self.TITLE)
 
+        # self.setGeometry(100, 100, 300, 150)
+        # self.setFixedWidth(300)
+
         self.setMinimumSize(300, 100)
         # self.setMinimumWidth(300)
         # self.setMinimumHeight(100)
 
         self.resize(300, 100)
+        # self.move(300, 300)
 
     def wgt_create(self) -> None:
         # GRID --------------------------------------------------------------------------------------------------------
@@ -64,6 +69,30 @@ class Gui(QWidget):
 
     def btn_toggled(self, _state: Optional[bool] = None) -> None:
         print(f"btn {_state=}")
+        self.wgt_main__center()
+
+    def wgt_main__center(self):
+        """
+        center the main window considering MULTY MONITORS.
+
+        NOTE: work incorrect in INIT!!! use in root module right after wgt.SHOW() not before!!!
+        """
+        window_geometry = self.frameGeometry()
+        # print(f"window_geometry={window_geometry}")      # PyQt5.QtCore.QRect(100, 100, 500, 500)
+
+        display_obj = QApplication.desktop()
+        # print(f"display_obj={display_obj}")      # <PyQt5.QtWidgets.QDesktopWidget object at 0x0000020630E771F0>
+
+        display_index = display_obj.screenNumber(display_obj.cursor().pos())
+        # print(f"display_index={display_index}")    # 1
+
+        display_geometry = display_obj.screenGeometry(display_index)
+        # print(f"display_geometry={display_geometry}")    # PyQt5.QtCore.QRect(1366, 0, 1920, 1080)
+
+        display_central_point = display_geometry.center()
+        # print(f"display_central_point={display_central_point}")    # PyQt5.QtCore.QPoint(2325, 539)
+
+        self.move(display_central_point.x() - window_geometry.width()//2, display_central_point.y() - window_geometry.height()//2)
 
 
 # =====================================================================================================================
