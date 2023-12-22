@@ -16,7 +16,15 @@ pass
 class Gui(QWidget):
     TITLE: str = "[GUI] Universal"
     LOGO: str = "logo.jpg"
+
+    SIZE_MINIMUM: List[Optional[int]] = [None, None]
+    SIZE_MAXIMUM: List[Optional[int]] = [None, None]
+    SIZE_FIXED: List[Optional[int]] = [None, None]
+    SIZE: List[Optional[int]] = [None, None]
+
     FLAGS: Dict[Any, str] = {
+        # TODO: use separated as CLASS!!! with special work FLAGS methods!!!!
+
         # UNCOMMENT IF NEEDED!
         # values are just for information!
         # if some flags overlays/conflict - used last activated
@@ -63,21 +71,44 @@ class Gui(QWidget):
 
     # MAIN WINDOW =====================================================================================================
     def wgt_main__apply_settings(self) -> None:
+        # SUPER ------------------------------------------------
         self._wgt_main__apply_logo()
         self.setWindowTitle(self.TITLE)
 
         for flag in self.FLAGS:
             self.setWindowFlags(flag)
 
+        if self.SIZE_MINIMUM[0]:
+            self.setMinimumWidth(self.SIZE_MINIMUM[0])
+        if self.SIZE_MINIMUM[1]:
+            self.setMinimumHeight(self.SIZE_MINIMUM[1])
+
+        if self.SIZE_MAXIMUM[0]:
+            self.setMaximumWidth(self.SIZE_MAXIMUM[0])
+        if self.SIZE_MAXIMUM[1]:
+            self.setMaximumHeight(self.SIZE_MAXIMUM[1])
+
+        if self.SIZE_FIXED[0]:
+            self.setFixedWidth(self.SIZE_FIXED[0])
+        if self.SIZE_FIXED[1]:
+            self.setFixedHeight(self.SIZE_FIXED[1])
+
+        if self.SIZE[0] or self.SIZE[1]:
+            width = self.SIZE[0] or self.width()
+            height = self.SIZE[1] or self.height()
+            self.resize(width, height)
+
         # self.setGeometry(100, 100, 300, 150)
         # self.setFixedWidth(300)
 
-        self.setMinimumSize(300, 100)
+        # self.setMinimumSize(300, 100)
         # self.setMinimumWidth(300)
         # self.setMinimumHeight(100)
 
         # self.resize(300, 100)
         # self.move(300, 300)
+
+        # USER ------------------------------------------------
 
     def _wgt_main__apply_logo(self) -> None:
         """
