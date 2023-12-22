@@ -16,6 +16,10 @@ pass
 class Gui(QWidget):
     TITLE: str = "[GUI] Universal"
     LOGO: str = "logo.jpg"
+    FLAGS: Dict[Any, str] = {
+        # COMMENT OUT NOT NEEDED!
+        # Qt.FramelessWindowHint: "hide title",
+    }
 
     _QAPP: QApplication = QApplication([])
 
@@ -41,6 +45,9 @@ class Gui(QWidget):
         self._wgt_main__apply_logo()
         self.setWindowTitle(self.TITLE)
 
+        for flag in self.FLAGS:
+            self.setWindowFlags(flag)
+
         # self.setGeometry(100, 100, 300, 150)
         # self.setFixedWidth(300)
 
@@ -53,11 +60,18 @@ class Gui(QWidget):
 
     def _wgt_main__apply_logo(self) -> None:
         """
-        need square size!
+        need square size for logo!
         """
         logo_filepath = pathlib.Path(self.LOGO)
         if logo_filepath.is_file() and logo_filepath.exists():
             self._QAPP.setWindowIcon(QIcon(logo_filepath.name))
+
+            try:
+                # turn on logo for python-applications (only for Windows) as associations
+                from PyQt5.QtWinExtras import QtWin
+                QtWin.setCurrentProcessExplicitAppUserModelID('mycompany.myproduct.subproduct.version')
+            except:
+                pass
 
     def _wgt_main__center(self):
         """
