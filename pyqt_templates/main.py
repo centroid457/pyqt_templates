@@ -1,4 +1,6 @@
 import sys
+import pathlib
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -13,6 +15,8 @@ pass
 # =====================================================================================================================
 class Gui(QWidget):
     TITLE: str = "[GUI] Universal"
+    LOGO: str = "logo.jpg"
+
     _QAPP: QApplication = QApplication([])
 
     def __init__(self):
@@ -24,7 +28,7 @@ class Gui(QWidget):
 
         # GUI SHOW ----------------------------------------------------------------------------------------------------
         self.show()
-        self.wgt_main__center()
+        self._wgt_main__center()
         exit_code = self._QAPP.exec_()
         if exit_code == 0:
             print(f"[OK]GUI({exit_code=})closed correctly")
@@ -32,8 +36,9 @@ class Gui(QWidget):
             print(f"[FAIL]GUI({exit_code=})closed INCORRECTLY")
         sys.exit(exit_code)
 
+    # MAIN WINDOW -----------------------------------------------------------------------------------------------------
     def wgt_main__apply_settings(self) -> None:
-        # MAIN WINDOW -------------------------------------------------------------------------------------------------
+        self._wgt_main__apply_logo()
         self.setWindowTitle(self.TITLE)
 
         # self.setGeometry(100, 100, 300, 150)
@@ -43,35 +48,18 @@ class Gui(QWidget):
         # self.setMinimumWidth(300)
         # self.setMinimumHeight(100)
 
-        self.resize(300, 100)
+        # self.resize(300, 100)
         # self.move(300, 300)
 
-    def wgt_create(self) -> None:
-        # GRID --------------------------------------------------------------------------------------------------------
-        layout_grid = QGridLayout()
-        layout_grid.setSpacing(2)
-        layout_grid.addWidget(QLabel("STLINK"), 0, 0)
-        layout_grid.addWidget(QLabel("0"), 0, 1)
-        layout_grid.addWidget(QLabel("1"), 0, 2)
+    def _wgt_main__apply_logo(self) -> None:
+        """
+        need square size!
+        """
+        logo_filepath = pathlib.Path(self.LOGO)
+        if logo_filepath.is_file() and logo_filepath.exists():
+            self._QAPP.setWindowIcon(QIcon(logo_filepath.name))
 
-        # START -------------------------------------------------------------------------------------------------------
-        self.btn_start = QPushButton("START")
-        self.btn_start.setCheckable(True)
-
-        # layout ------------------------------------------------------------------------------------------------------
-        layout_main = QVBoxLayout()
-        layout_main.addLayout(layout_grid)
-        layout_main.addWidget(self.btn_start)
-        self.setLayout(layout_main)
-
-    def slots_connect(self) -> None:
-        self.btn_start.toggled.connect(self.btn_toggled)
-
-    def btn_toggled(self, _state: Optional[bool] = None) -> None:
-        print(f"btn {_state=}")
-        self.wgt_main__center()
-
-    def wgt_main__center(self):
+    def _wgt_main__center(self):
         """
         center the main window considering MULTY MONITORS.
 
@@ -92,7 +80,36 @@ class Gui(QWidget):
         display_central_point = display_geometry.center()
         # print(f"display_central_point={display_central_point}")    # PyQt5.QtCore.QPoint(2325, 539)
 
-        self.move(display_central_point.x() - window_geometry.width()//2, display_central_point.y() - window_geometry.height()//2)
+        self.move(
+            display_central_point.x() - window_geometry.width()//2,
+            display_central_point.y() - window_geometry.height()//2
+        )
+
+    # WINDOW ----------------------------------------------------------------------------------------------------------
+    def wgt_create(self) -> None:
+        # GRID --------------------------------------------------------------------------------------------------------
+        layout_grid = QGridLayout()
+        layout_grid.setSpacing(2)
+        layout_grid.addWidget(QLabel("STLINK"), 0, 0)
+        layout_grid.addWidget(QLabel("0"), 0, 1)
+        layout_grid.addWidget(QLabel("1"), 0, 2)
+
+        # START -------------------------------------------------------------------------------------------------------
+        self.btn_start = QPushButton("START")
+        self.btn_start.setCheckable(True)
+
+        # layout_main -------------------------------------------------------------------------------------------------
+        layout_main = QVBoxLayout()
+        layout_main.addLayout(layout_grid)
+        layout_main.addWidget(self.btn_start)
+        self.setLayout(layout_main)
+
+    def slots_connect(self) -> None:
+        self.btn_start.toggled.connect(self.btn_toggled)
+
+    def btn_toggled(self, _state: Optional[bool] = None) -> None:
+        print(f"btn {_state=}")
+        self._wgt_main__center()
 
 
 # =====================================================================================================================
