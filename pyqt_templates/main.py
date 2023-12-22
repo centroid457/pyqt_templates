@@ -23,7 +23,7 @@ class Gui(QWidget):
     SIZE: List[Optional[int]] = [None, None]
 
     FLAGS: Dict[Any, str] = {
-        # TODO: use separated as CLASS!!! with special work FLAGS methods!!!!
+        # TODO: use separated as CLASS!!! with special FLAG methods!!! sum/del/check/... and try to mark as True/False/None
 
         # UNCOMMENT IF NEEDED!
         # values are just for information!
@@ -71,13 +71,15 @@ class Gui(QWidget):
 
     # MAIN WINDOW =====================================================================================================
     def wgt_main__apply_settings(self) -> None:
-        # SUPER ------------------------------------------------
-        self._wgt_main__apply_logo()
+        # TITLE --------------------------------------------------
         self.setWindowTitle(self.TITLE)
+        self._wgt_main__apply_logo()
 
+        # FLAGS ---------------------------------------------------
         for flag in self.FLAGS:
             self.setWindowFlags(flag)
 
+        # GEOMETRY ------------------------------------------------
         if self.SIZE_MINIMUM[0]:
             self.setMinimumWidth(self.SIZE_MINIMUM[0])
         if self.SIZE_MINIMUM[1]:
@@ -155,24 +157,23 @@ class Gui(QWidget):
         # GRID --------------------------------------------------------------------------------------------------------
         layout_grid = QGridLayout()
         layout_grid.setSpacing(2)
-        layout_grid.addWidget(QLabel("STLINK"), 0, 0)
-        layout_grid.addWidget(QLabel("0"), 0, 1)
-        layout_grid.addWidget(QLabel("1"), 0, 2)
+        layout_grid.addWidget(QLabel("1"), 0, 0)
+        layout_grid.addWidget(QLabel("2"), 0, 1)
 
         # START -------------------------------------------------------------------------------------------------------
-        self.btn_start = QPushButton("START")
-        self.btn_start.setCheckable(True)
+        self._btn_debug = QPushButton("DEBUG")
+        self._btn_debug.setCheckable(True)
 
         # layout_main -------------------------------------------------------------------------------------------------
         layout_main = QVBoxLayout()
         layout_main.addLayout(layout_grid)
-        layout_main.addWidget(self.btn_start)
+        layout_main.addWidget(self._btn_debug)
         self.setLayout(layout_main)
 
     def slots_connect(self) -> None:
-        self.btn_start.toggled.connect(self.btn_toggled)
+        self._btn_debug.toggled.connect(self._btn_debug__toggled)
 
-    def btn_toggled(self, _state: Optional[bool] = None) -> None:
+    def _btn_debug__toggled(self, _state: Optional[bool] = None) -> None:
         print(f"btn {_state=}")
         self._wgt_main__center()
 
