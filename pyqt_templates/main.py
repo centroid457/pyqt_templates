@@ -97,7 +97,6 @@ class Gui(QWidget):
     def _wgt_main__center(self):
         """
         center the main window considering MULTY MONITORS.
-
         NOTE: work incorrect in INIT!!! use in root module right after wgt.SHOW() not before!!!
         """
         window_geometry = self.frameGeometry()
