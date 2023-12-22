@@ -146,6 +146,13 @@ class Gui(QWidget):
         self._wgt_main__center()
 
     # EVENTS ==========================================================================================================
+    # events list see in source code!
+
+    # def mouseMoveEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
+    # def mouseDoubleClickEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
+    # def mouseReleaseEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
+    # def mousePressEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
+
     def moveEvent(self,  a0: Optional[QMoveEvent]) -> None:
         # print(self.geometry().x(), self.geometry().y())
         pass
@@ -153,6 +160,31 @@ class Gui(QWidget):
     def resizeEvent(self, a0: Optional[QResizeEvent]) -> None:
         # print(self.size())
         pass
+
+    def enterEvent(self, a0: Optional[QEvent]) -> None:
+        """mouse get aria over the wgt
+        """
+        # print("mouse enterEvent")
+        pass
+
+    def leaveEvent(self, a0: Optional[QEvent]) -> None:
+        """mouse leave aria over the wgt
+        """
+        # print("mouse leaveEvent")
+        pass
+
+    # NOT WORKING ------------------------------------------
+    # def focusOutEvent(self, a0: Optional[QEvent]) -> None:
+    #     """mouse leave aria over the wgt
+    #     """
+    #     # print("focusOutEvent")
+    #     pass
+    #
+    # def focusInEvent(self, a0: Optional[QEvent]) -> None:
+    #     """mouse leave aria over the wgt
+    #     """
+    #     # print("focusInEvent")
+    #     pass
 
 
 # =====================================================================================================================
