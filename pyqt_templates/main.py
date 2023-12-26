@@ -16,11 +16,13 @@ pass
 class Gui(QWidget):
     TITLE: str = "[GUI] Template"
     LOGO: str = "logo.jpg"
+    CENTER: bool = True
 
     SIZE_MINIMUM: List[Optional[int]] = [None, None]
     SIZE_MAXIMUM: List[Optional[int]] = [None, None]
     SIZE_FIXED: List[Optional[int]] = [None, None]
     SIZE: List[Optional[int]] = [None, None]
+    MOVE: List[Optional[int]] = [None, None]
 
     FLAGS: Dict[Any, str] = {
         # TODO: use separated as CLASS!!! with special FLAG methods!!! sum/del/check/... and try to mark as True/False/None
@@ -61,7 +63,8 @@ class Gui(QWidget):
 
         # GUI SHOW ----------------------------------------------------------------------------------------------------
         self.show()
-        self._wgt_main__center()
+        if self.CENTER:
+            self._wgt_main__center()
         exit_code = self._QAPP.exec_()
         if exit_code == 0:
             print(f"[OK]GUI({exit_code=})closed correctly")
@@ -103,15 +106,10 @@ class Gui(QWidget):
             height = self.SIZE[1] or self.height()
             self.resize(width, height)
 
-        # self.setGeometry(100, 100, 300, 150)
-        # self.setFixedWidth(300)
-
-        # self.setMinimumSize(300, 100)
-        # self.setMinimumWidth(300)
-        # self.setMinimumHeight(100)
-
-        # self.resize(300, 100)
-        # self.move(300, 300)
+        if self.MOVE[0] or self.MOVE[1]:
+            x = self.MOVE[0] or self.x()
+            y = self.MOVE[1] or self.y()
+            self.move(x, y)
 
         # USER ------------------------------------------------
 
