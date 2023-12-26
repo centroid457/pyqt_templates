@@ -183,22 +183,22 @@ class Gui(QWidget):
 
     # def mouseMoveEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
 
-    def moveEvent(self,  a0: Optional[QMoveEvent]) -> None:
+    def moveEvent(self,  a0: Optional[QMoveEvent] = None, QMoveEvent: Any = None) -> None:
         # print(self.geometry().x(), self.geometry().y())
         pass
 
-    def resizeEvent(self, a0: Optional[QResizeEvent]) -> None:
+    def resizeEvent(self, a0: Optional[QResizeEvent] = None, ResizeEvent: Any = None) -> None:
         # print(self.size())
         pass
 
     # mouse POINTER -------------------------------------------------
-    def enterEvent(self, a0: Optional[QEvent]) -> None:
+    def enterEvent(self, a0: Optional[QEvent] = None) -> None:
         """mouse get aria over the wgt
         """
         # print("mouse enterEvent")
         pass
 
-    def leaveEvent(self, a0: Optional[QEvent]) -> None:
+    def leaveEvent(self, a0: Optional[QEvent] = None) -> None:
         """mouse leave aria over the wgt
         """
         # print("mouse leaveEvent")
