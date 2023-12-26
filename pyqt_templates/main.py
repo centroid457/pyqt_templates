@@ -76,8 +76,11 @@ class Gui(QWidget):
         self._wgt_main__apply_logo()
 
         # FLAGS ---------------------------------------------------
+        flag_cum = 0
         for flag in self.FLAGS:
-            self.setWindowFlags(flag)
+            flag_cum |= flag
+        if flag_cum:
+            self.setWindowFlags(flag_cum)
 
         # GEOMETRY ------------------------------------------------
         if self.SIZE_MINIMUM[0]:
