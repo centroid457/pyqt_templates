@@ -184,9 +184,6 @@ class Gui(QWidget):
     # events list see in source code!
 
     # def mouseMoveEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
-    # def mouseDoubleClickEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
-    # def mouseReleaseEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
-    # def mousePressEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
 
     def moveEvent(self,  a0: Optional[QMoveEvent]) -> None:
         # print(self.geometry().x(), self.geometry().y())
@@ -196,6 +193,7 @@ class Gui(QWidget):
         # print(self.size())
         pass
 
+    # mouse POINTER -------------------------------------------------
     def enterEvent(self, a0: Optional[QEvent]) -> None:
         """mouse get aria over the wgt
         """
@@ -206,6 +204,35 @@ class Gui(QWidget):
         """mouse leave aria over the wgt
         """
         # print("mouse leaveEvent")
+        pass
+
+    # mouse CLICK -------------------------------------------------
+    def mousePressEvent(self, a0: Optional[QMouseEvent] = None) -> None:
+        """will not apply when click on wgt btns!"""
+        # print("mouse mousePressEvent")
+        pass
+
+    def mouseDoubleClickEvent(self, a0: Optional[QMouseEvent] = None) -> None:
+        """will not apply when click on wgt btns!
+        DIFFERENCE between DoubleClick and PressEvent
+            if detected DoubleClick it will generate DoubleClickEvent else PressEvent
+                mouse mousePressEvent
+                mouse mouseReleaseEvent
+                mouse mouseDoubleClickEvent
+                mouse mouseReleaseEvent
+        """
+        # print("mouse mouseDoubleClickEvent")
+        pass
+
+    def mouseReleaseEvent(self, a0: Optional[QMouseEvent] = None) -> None:
+        """
+        work always! both for One/Double click!
+            mouse mousePressEvent
+            mouse mouseReleaseEvent
+            mouse mouseDoubleClickEvent
+            mouse mouseReleaseEvent
+        """
+        # print("mouse mouseReleaseEvent")
         pass
 
     # NOT WORKING ------------------------------------------
