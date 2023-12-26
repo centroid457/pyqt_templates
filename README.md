@@ -33,7 +33,7 @@ from pyqt_templates import *
 See tests and sourcecode for other examples.
 
 ******************************
-### 1. example-1=IMPORT_BEST.py
+### 1. template-1=IMPORT_BEST.py
 ```python
 import sys
 from PyQt5.QtCore import *
@@ -42,7 +42,7 @@ from PyQt5.QtWidgets import *
 ```
 
 ******************************
-### 2. example-2=QAPP_in_cls.py
+### 2. template-2=QAPP_in_cls.py
 ```python
 import sys
 from PyQt5.QtCore import *
@@ -121,7 +121,7 @@ if __name__ == '__main__':
 ```
 
 ******************************
-### 3. example-3=TableModel.py
+### 3. template-3=TableModel.py
 ```python
 import sys
 from PyQt5.QtCore import *
