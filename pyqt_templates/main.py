@@ -14,6 +14,7 @@ Type__Size = Tuple[Optional[int], Optional[int]]
 
 # =====================================================================================================================
 class Gui(QWidget):
+    # SETTINGS --------------------------------------------------
     TITLE: str = "[GUI] Template"
     LOGO: str = "logo.jpg"
     CENTER: bool = True
@@ -52,16 +53,17 @@ class Gui(QWidget):
         # Qt.WindowStaysOnBottomHint: "[layer] always on BOTTOM",
     }
 
+    # AUXILIARY --------------------------------------------------
     _QAPP: QApplication = QApplication([])
 
     def __init__(self):
         super().__init__()
 
         self.wgt_create()
-        self.wgt_main__apply_settings()
         self.slots_connect()
 
         # GUI SHOW ----------------------------------------------------------------------------------------------------
+        self._wgt_main__apply_settings()
         self.show()
         if self.CENTER:
             self._wgt_main__center()
@@ -73,7 +75,7 @@ class Gui(QWidget):
         sys.exit(exit_code)
 
     # MAIN WINDOW =====================================================================================================
-    def wgt_main__apply_settings(self) -> None:
+    def _wgt_main__apply_settings(self) -> None:
         # TITLE --------------------------------------------------
         self.setWindowTitle(self.TITLE)
         self._wgt_main__apply_logo()
