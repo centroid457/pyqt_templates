@@ -1,4 +1,5 @@
 import os
+import sys
 import pytest
 import pathlib
 import shutil
@@ -10,8 +11,8 @@ from pyqt_templates import *
 
 
 # =====================================================================================================================
-class Test__888888888888:
-    VICTIM: Type[NEW_CLASS____] = type("VICTIM", (NEW_CLASS____,), {})
+class Test__Gui:
+    VICTIM: Type[Gui] = type("VICTIM", (Gui,), {})
 
     @classmethod
     def setup_class(cls):
@@ -22,11 +23,17 @@ class Test__888888888888:
         pass
 
     def setup_method(self, method):
-        self.VICTIM = type("VICTIM", (NEW_CLASS____,), {})
+        self.VICTIM = type("VICTIM", (Gui,), {})
 
     # -----------------------------------------------------------------------------------------------------------------
-    def test__ClassMethod_and_obj(self):
-        assert True
+    def test__START_GUI(self):
+        class Gui_1(Gui):
+            SIZE = [300, 100]
+
+        with pytest.raises(SystemExit) as exx:
+            Gui_1()
+        assert exx.type == SystemExit
+        assert exx.value.code == 0
 
 
 # =====================================================================================================================
