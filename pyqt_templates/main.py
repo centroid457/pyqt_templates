@@ -9,7 +9,7 @@ from typing import *
 
 
 # =====================================================================================================================
-pass
+Type__Size = Tuple[Optional[int], Optional[int]]
 
 
 # =====================================================================================================================
@@ -18,11 +18,11 @@ class Gui(QWidget):
     LOGO: str = "logo.jpg"
     CENTER: bool = True
 
-    SIZE_MINIMUM: List[Optional[int]] = [None, None]
-    SIZE_MAXIMUM: List[Optional[int]] = [None, None]
-    SIZE_FIXED: List[Optional[int]] = [None, None]
-    SIZE: List[Optional[int]] = [None, None]
-    MOVE: List[Optional[int]] = [None, None]
+    SIZE_MINIMUM: Type__Size = (None, None)
+    SIZE_MAXIMUM: Type__Size = (None, None)
+    SIZE_FIXED: Type__Size = (None, None)
+    SIZE: Type__Size = (None, None)
+    MOVE: Type__Size = (None, None)
 
     FLAGS: Dict[Any, str] = {
         # TODO: use separated as CLASS!!! with special FLAG methods!!! sum/del/check/... and try to mark as True/False/None
