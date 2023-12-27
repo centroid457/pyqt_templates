@@ -163,14 +163,30 @@ class Gui(QWidget):
         layout_grid.addWidget(QLabel("1"), 0, 0)
         layout_grid.addWidget(QLabel("2"), 0, 1)
 
-        # START -------------------------------------------------------------------------------------------------------
+        # ELEMENTS ----------------------------------------------------------------------------------------------------
+        # BTN-----------------------------------------
         self._btn_debug = QPushButton("DEBUG")
         self._btn_debug.setCheckable(True)
+
+        # PTE-----------------------------------------
+        self._pte = QPlainTextEdit()
+        # self._pte.setEnabled(True)
+        # self._pte.setUndoRedoEnabled(True)
+        # self._pte.setReadOnly(True)
+        # self._pte.setMaximumBlockCount(15)
+
+        # self._pte.clear()
+        self._pte.setPlainText("setPlainText")
+        self._pte.appendPlainText("appendPlainText")
+        # self._pte.appendHtml("")
+        # self._pte.anchorAt(#)
+        # self._pte.setSizeAdjustPolicy(#)
 
         # layout_main -------------------------------------------------------------------------------------------------
         layout_main = QVBoxLayout()
         layout_main.addLayout(layout_grid)
         layout_main.addWidget(self._btn_debug)
+        layout_main.addWidget(self._pte)
         self.setLayout(layout_main)
 
     def slots_connect(self) -> None:
