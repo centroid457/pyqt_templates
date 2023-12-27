@@ -174,7 +174,8 @@ class Gui(QWidget):
         self.setLayout(layout_main)
 
     def slots_connect(self) -> None:
-        self._btn_debug.toggled.connect(self._btn_debug__toggled)
+        if hasattr(self, "_btn_debug"):
+            self._btn_debug.toggled.connect(self._btn_debug__toggled)
 
     def _btn_debug__toggled(self, _state: Optional[bool] = None) -> None:
         print(f"btn {_state=}")
