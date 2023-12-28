@@ -173,8 +173,10 @@ class TableModelTemplate(QAbstractTableModel):
             AlignHorizontal_Mask = 31   # TOP+RIGHT
             AlignVertical_Mask = 480    # LEFT+VCENTER
             """
-            # return Qt.AlignVCenter | Qt.AlignLeft
-            return Qt.AlignCenter
+            if col == 0:
+                return Qt.AlignVCenter
+            if col > 0:
+                return Qt.AlignCenter
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.FontRole:
