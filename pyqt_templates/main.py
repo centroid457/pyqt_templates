@@ -530,17 +530,33 @@ class Gui(QWidget):
 
         self.setLayout(layout_main)
 
+    # SLOTS ===========================================================================================================
     def slots_connect(self) -> None:
         if self.BTN_DEBUG:
+            self.BTN_DEBUG.clicked.connect(self._wgt_main__center)
             self.BTN_DEBUG.toggled.connect(self.BTN_DEBUG__toggled)
-            # self.BTN_DEBUG.clicked.connect(self.BTN_DEBUG__toggled)
 
         if self.QTV:
-            self.QTV.selectionModel().selectionChanged.connect(lambda z=None, z2=None: print("selectionChanged"))
+            self.QTV.selectionModel().selectionChanged.connect(self.QTV_selection_changed)
 
     def BTN_DEBUG__toggled(self, state: Optional[bool] = None) -> None:
         print(f"btn {state=}")
-        self._wgt_main__center()
+
+    def QTV_selection_changed(self, first: QItemSelection, last: QItemSelection) -> None:
+        # print("selectionChanged")
+        # print(f"{first=}")  # first=<PyQt5.QtCore.QItemSelection object at 0x000001C79A107460>
+        # ObjectInfo(first.indexes()[0]).print(_log_iter=True, skip_fullnames=["takeFirst", "takeLast"])
+
+        if not first:
+            print(f"selected first NotSelectable Index {first=}")
+            return
+
+        index: QModelIndex = first.indexes()[0]
+
+        row = index.row()
+        col = index.column()
+
+        self.QPTE.setPlainText(f"{row=}/{col=}")
 
     # EVENTS ==========================================================================================================
     pass    # events list see in source code!
