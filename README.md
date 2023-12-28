@@ -151,7 +151,7 @@ class _Data:
 
 
 # =====================================================================================================================
-class _TableModelTemplate(QAbstractTableModel):
+class TableModelTemplate(QAbstractTableModel):
     DATA: _Data
 
     def __init__(self, data: _Data):
@@ -268,7 +268,7 @@ class Gui(QWidget):
         self.qtv_create()
 
     def qtv_create(self):
-        tm = _TableModelTemplate(self.DATA)
+        tm = TableModelTemplate(self.DATA)
 
         self.QTV = QTableView(self)
         self.QTV.setModel(tm)

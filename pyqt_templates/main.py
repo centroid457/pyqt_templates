@@ -42,7 +42,7 @@ class _Data:
 
 
 # =====================================================================================================================
-class _TableModelTemplate(QAbstractTableModel):
+class TableModelTemplate(QAbstractTableModel):
     DATA: _Data
 
     # METHODS USER ----------------------------------------------------------------------------------------------------
@@ -442,7 +442,7 @@ class Gui(QWidget):
 
     def QTV_create(self) -> None:
         data = _Data([_Row(f"row{index}") for index in range(5)], [_Dev(f"dev{index}") for index in range(4)])
-        tm = _TableModelTemplate(data)
+        tm = TableModelTemplate(data)
 
         self.QTV = QTableView()
         self.QTV.setModel(tm)
