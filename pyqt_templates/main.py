@@ -52,7 +52,7 @@ class _TableModelTemplate(QAbstractTableModel):
     def rowCount(self, parent: QModelIndex = None) -> int:
         return len(self.DATA.ROWS)
 
-    def columnCount(self, parent: QModelIndex = None) -> int:
+    def columnCount(self, parent: Any) -> int:
         return len(self.DATA.DEVS) + 1
 
     def headerData(self, section: Any, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> str:
@@ -65,11 +65,37 @@ class _TableModelTemplate(QAbstractTableModel):
             if orientation == Qt.Vertical:
                 return section + 1
 
-    def flags(self, index):
+    def flags(self, index: QModelIndex) -> int:
+        """
+        VARIANTS
+        --------
+        Qt.NoItemFlags                      # 0=без флагов - полное отключение и деактивация всего
+        flags |= Qt.ItemIsSelectable        # 1=выделяется цветом при выборе иначе только внешней рамкой!
+        flags |= Qt.ItemIsEditable          # 2=можно набирать с клавиатуры!
+        flags |= Qt.ItemIsDragEnabled       # 4=
+        flags |= Qt.ItemIsDropEnabled       # 8=
+        flags |= Qt.ItemIsUserCheckable     # 16=для чекбоксов дает возможность их изменять мышью!
+        flags |= Qt.ItemIsEnabled           # 32=если нет - будет затенен! без возможности выбора!
+        flags |= Qt.ItemIsAutoTristate      # 64=не понял что это
+        flags |= Qt.ItemIsTristate          # 64=не понял
+        flags |= Qt.ItemNeverHasChildren    # 128=не понял
+        flags |= Qt.ItemIsUserTristate      # 256=
+        """
         flags = super().flags(index)
 
-        if index.column() == 0:
-            flags |= Qt.ItemIsUserCheckable
+        if index.column() > 0:
+            # flags |= Qt.ItemIsUserCheckable
+            # flags |= Qt.ItemIsEditable
+            # flags |= Qt.ItemIsSelectable
+            # flags |= Qt.ItemIsEnabled
+            pass
+
+        elif index.column() == 0:
+            return Qt.ItemIsEnabled | Qt.ItemIsUserCheckable
+
+        else:
+            return Qt.NoItemFlags
+
         return flags
 
     def data(self, index: QModelIndex, role: int = None) -> Any:
