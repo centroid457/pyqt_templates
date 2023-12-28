@@ -334,6 +334,7 @@ class Gui(QWidget):
     # COMMON WGTS ------------------------------------------------
     BTN_DEBUG: Optional[QPushButton] = None
     QTV: Optional[QTableView] = None
+    QTM: Optional[QAbstractTableModel] = None
     QPTE: Optional[QPlainTextEdit] = None
 
     def __init__(self):
@@ -442,10 +443,10 @@ class Gui(QWidget):
 
     def QTV_create(self) -> None:
         data = _Data([_Row(f"row{index}") for index in range(5)], [_Dev(f"dev{index}") for index in range(4)])
-        tm = TableModelTemplate(data)
+        self.QTM = TableModelTemplate(data)
 
         self.QTV = QTableView()
-        self.QTV.setModel(tm)
+        self.QTV.setModel(self.QTM)
 
         # self.QTV.setStyleSheet("gridline-color: rgb(255, 0, 0)")
         # self.QTV.setMinimumSize(400, 300)
