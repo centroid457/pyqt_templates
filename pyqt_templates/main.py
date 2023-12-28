@@ -49,10 +49,10 @@ class _TableModelTemplate(QAbstractTableModel):
         super().__init__()
         self.DATA = data
 
-    def rowCount(self, parent: QModelIndex = None) -> int:
+    def rowCount(self, parent: Any = None, *args, **kwargs) -> int:
         return len(self.DATA.ROWS)
 
-    def columnCount(self, parent: Any) -> int:
+    def columnCount(self, parent: Any = None, *args, **kwargs) -> int:
         return len(self.DATA.DEVS) + 1
 
     def headerData(self, section: Any, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> str:
@@ -98,10 +98,11 @@ class _TableModelTemplate(QAbstractTableModel):
 
         return flags
 
-    def data(self, index: QModelIndex, role: int = None) -> Any:
+    def data(self, index: QModelIndex, role: int = Qt.DisplayRole) -> Any:
         if not index.isValid():
             return QVariant()
 
+        # PREPARE -----------------------------------------------------------------------------------------------------
         col = index.column()
         row = index.row()
 
@@ -111,17 +112,44 @@ class _TableModelTemplate(QAbstractTableModel):
         else:
             dut = None
 
+        # -------------------------------------------------------------------------------------------------------------
         if role == Qt.DisplayRole:
             if col == 0:
                 return f'{tc.NAME}'
             if col > 0:
                 return f'{dut.result}'
 
-        elif role == Qt.ForegroundRole:
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.TextAlignmentRole:
+            """
+            AlignLeft=AlignLeading = 1
+            AlignRight=AlignTrailing = 2
+
+            AlignTop = 32
+            AlignBottom = 64
+
+            AlignHCenter = 4
+            AlignVCenter = 128
+            AlignCenter = 132
+
+            AlignAbsolute = 16
+            AlignBaseline = 256
+
+            AlignJustify = 8
+
+            AlignHorizontal_Mask = 31
+            AlignVertical_Mask = 480
+            """
+            # return Qt.AlignVCenter | Qt.AlignLeft
+            return Qt.AlignCenter
+
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.ForegroundRole:
             if tc.SKIP:
                 return QColor('#a2a2a2')
 
-        elif role == Qt.BackgroundRole:
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.BackgroundRole:       # Qt.BackgroundColorRole - не понял в чем разница!!! кажется одно и тоже!
             if tc.SKIP:
                 return QColor('#f2f2f2')
 
@@ -131,12 +159,30 @@ class _TableModelTemplate(QAbstractTableModel):
                 if tc.result is False:
                     return QColor("red")
 
-        if role == Qt.CheckStateRole:
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.CheckStateRole:   # для чекбоксов!
             if col == 0:
                 if tc.SKIP:
                     return Qt.Unchecked
                 else:
                     return Qt.Checked
+
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.FontRole:
+            font = QFont()
+
+            font.setBold(True)
+            font.setItalic(True)
+
+            font.setOverline(True)      # строка над текстом
+            font.setStrikeOut(True)     # зачеркнутый
+            font.setUnderline(True)     # подчеркнутый
+
+            # не понял!! --------------------
+            # font.setStretch(5)
+            # font.setCapitalization()
+
+            return font
 
     def setData(self, index: QModelIndex, value: Any, role: int = None):
         if not index.isValid():
