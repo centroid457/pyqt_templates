@@ -67,18 +67,18 @@ class _TableModelTemplate(QAbstractTableModel):
 
     def flags(self, index: QModelIndex) -> int:
         """
-        VARIANTS
-        --------
+        VARIANTS FLAGS
+        --------------
         Qt.NoItemFlags                      # 0=без флагов - полное отключение и деактивация всего
-        flags |= Qt.ItemIsSelectable        # 1=выделяется цветом при выборе иначе только внешней рамкой!
+        flags |= Qt.ItemIsSelectable        # 1=выделяется цветом при выборе, иначе только внешней рамкой!
         flags |= Qt.ItemIsEditable          # 2=можно набирать с клавиатуры!
         flags |= Qt.ItemIsDragEnabled       # 4=
         flags |= Qt.ItemIsDropEnabled       # 8=
         flags |= Qt.ItemIsUserCheckable     # 16=для чекбоксов дает возможность их изменять мышью!
         flags |= Qt.ItemIsEnabled           # 32=если нет - будет затенен! без возможности выбора!
-        flags |= Qt.ItemIsAutoTristate      # 64=не понял что это
-        flags |= Qt.ItemIsTristate          # 64=не понял
-        flags |= Qt.ItemNeverHasChildren    # 128=не понял
+        flags |= Qt.ItemIsAutoTristate      # 64=
+        flags |= Qt.ItemIsTristate          # 64=   так и не понял что это!!!
+        flags |= Qt.ItemNeverHasChildren    # 128=
         flags |= Qt.ItemIsUserTristate      # 256=
         """
         flags = super().flags(index)
@@ -91,7 +91,7 @@ class _TableModelTemplate(QAbstractTableModel):
             pass
 
         elif index.column() == 0:
-            return Qt.ItemIsEnabled | Qt.ItemIsUserCheckable
+            return Qt.ItemIsEnabled | Qt.ItemIsUserCheckable    #| Qt.ItemIsTristate
 
         else:
             return Qt.NoItemFlags
@@ -101,6 +101,26 @@ class _TableModelTemplate(QAbstractTableModel):
     def data(self, index: QModelIndex, role: int = Qt.DisplayRole) -> Any:
         # if not index.isValid():
         #     return QVariant()
+        """
+        VARIANTS ROLE
+        -------------
+        DisplayRole = 0
+        DecorationRole = 1
+        EditRole = 2
+        ToolTipRole = 3
+        StatusTipRole = 4
+        WhatsThisRole = 5
+        FontRole = 6
+        TextAlignmentRole = 7
+
+        BackgroundRole=BackgroundColorRole = 8
+        ForegroundRole=TextColorRole = 9
+
+        CheckStateRole = 10
+        SizeHintRole = 13
+        InitialSortOrderRole = 14
+        UserRole = 256
+        """
 
         # PREPARE -----------------------------------------------------------------------------------------------------
         col = index.column()
@@ -122,6 +142,8 @@ class _TableModelTemplate(QAbstractTableModel):
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.TextAlignmentRole:
             """
+            VARIANTS ALIGN
+            --------------
             AlignLeft=AlignLeading = 1
             AlignRight=AlignTrailing = 2
 
@@ -163,7 +185,7 @@ class _TableModelTemplate(QAbstractTableModel):
                 return font
 
         # -------------------------------------------------------------------------------------------------------------
-        if role == Qt.BackgroundRole:   # ЦВЕТ ФОНА=Qt.BackgroundColorRole - не понял разницы!!! кажется одно и тоже!
+        if role == Qt.BackgroundColorRole:   # =BackgroundRole
             if tc.SKIP:
                 return QColor('#f2f2f2')
 
@@ -174,12 +196,19 @@ class _TableModelTemplate(QAbstractTableModel):
                     return QColor("red")
 
         # -------------------------------------------------------------------------------------------------------------
-        if role == Qt.ForegroundRole:   # цвет текста
+        if role == Qt.TextColorRole:   # =ForegroundRole
             if tc.SKIP:
                 return QColor('#a2a2a2')
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.CheckStateRole:   # для чекбоксов!
+            """
+            VARIANTS CHECK
+            --------------
+            Unchecked (или 0) - флажок сброшен;
+            PartiallyChecked (или 1) - флажок частично установлен;  -----не смог его увидеть!!!
+            Checked (или 2) - флажок установлен
+            """
             if col == 0:
                 if tc.SKIP:
                     return Qt.Unchecked
@@ -191,16 +220,27 @@ class _TableModelTemplate(QAbstractTableModel):
             return f"{row}/{col}"
 
         # -------------------------------------------------------------------------------------------------------------
-        if role == Qt.DecorationRole:
-            # FIXME: почему-то не работает!!!
-            if col == 2:
+        if role == Qt.DecorationRole:   # ИКОНКА в ячейке слева!
+            # может не работать! не работало с первого раза, НО потом вдруг заработало само собой когда добавил SizeHintRole!!!
+            if col == 1 and not tc.SKIP:
                 icon = QIcon()
-                icon.addPixmap(QPixmap('logo.jpg'), QIcon.Normal)
+                icon.addPixmap(QPixmap('logo.jpg'))
                 return icon
 
-    def setData(self, index: QModelIndex, value: Any, role: Qt.EditRole = None) -> bool:
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.SizeHintRole:     # размер ячейки!
+            """
+            IMPORTANT: 
+            1. meaning like MinimumSize!
+            2. BUT if there are IconOrCheck exists - size will be same as before adding it and HIDING oversized text
+            """
+            if col > 1:
+                return QSize(5, 5)
+
+    def setData(self, index: QModelIndex, value: Any, role: int = Qt.EditRole) -> bool:
         """
         NOTE: при фактическом изменении ОБЯЗАТЕЛЬНО возвращать TRUE!!! Иначе Exx!!!!
+        in other cases you can return True either, or None!
         """
         # if not index.isValid():
         #     return False
@@ -217,8 +257,22 @@ class _TableModelTemplate(QAbstractTableModel):
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.CheckStateRole and col == 0:      # ЧЕКБОКСЫ
+            # need used flag ItemIsUserCheckable!
             tc.SKIP = value == Qt.Unchecked
-            return True
+
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.EditRole:
+            # need used flag ItemIsEditable!
+            if col == 0:
+                print("EditRole")
+
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.SizeHintRole:
+            # хотел увидеть изменение размера НО ЭТО ТАК НЕ РАБОТАЕТ!!!
+            print("SizeHintRole")
+
+        # -------------------------------------------------------------------------------------------------------------
+        return True
 
 
 # =====================================================================================================================
