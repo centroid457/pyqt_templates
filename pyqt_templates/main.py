@@ -130,7 +130,6 @@ class TableModelTemplate(QAbstractTableModel):
         InitialSortOrderRole = 14
         UserRole = 256
         """
-
         # PREPARE -----------------------------------------------------------------------------------------------------
         col = index.column()
         row = index.row()
@@ -153,23 +152,26 @@ class TableModelTemplate(QAbstractTableModel):
             """
             VARIANTS ALIGN
             --------------
-            AlignLeft=AlignLeading = 1
-            AlignRight=AlignTrailing = 2
+            not exists NAME!!!} = 0         # (LEFT+TOP) [[[[[[[[DEFAULT IS [LEFT+TOP]]]]]]]]]
 
-            AlignTop = 32
-            AlignBottom = 64
+            AlignLeft=AlignLeading = 1      # LEFT(+TOP)
+            AlignRight=AlignTrailing = 2    # RIGHT(+TOP)
 
-            AlignHCenter = 4
-            AlignVCenter = 128
-            AlignCenter = 132
+            AlignTop = 32       # TOP(+LEFT)
+            AlignBottom = 64    # BOT(+LEFT)
 
-            AlignAbsolute = 16
-            AlignBaseline = 256
+            AlignHCenter = 4    # HCENTER(+TOP)
+            AlignVCenter = 128  # VCENTER(+LEFT)
+            AlignCenter = 132   # VCENTER+HCENTER
 
-            AlignJustify = 8
+            # =====MAYBE DID NOT FIGURED OUT!!!
+            AlignAbsolute = 16      # (LEFT+TOP) == asDEFAULT
+            AlignBaseline = 256     # (LEFT+TOP) == asDEFAULT
 
-            AlignHorizontal_Mask = 31
-            AlignVertical_Mask = 480
+            AlignJustify = 8        # (LEFT+TOP) == asDEFAULT
+
+            AlignHorizontal_Mask = 31   # TOP+RIGHT
+            AlignVertical_Mask = 480    # LEFT+VCENTER
             """
             # return Qt.AlignVCenter | Qt.AlignLeft
             return Qt.AlignCenter
@@ -284,7 +286,7 @@ class TableModelTemplate(QAbstractTableModel):
             # хотел увидеть изменение размера НО ЭТО ТАК НЕ РАБОТАЕТ!!!
             print("SizeHintRole")
 
-        # -------------------------------------------------------------------------------------------------------------
+        # FINAL -------------------------------------------------------------------------------------------------------
         self._data_reread()
         return True
 
