@@ -55,16 +55,15 @@ class _TableModelTemplate(QAbstractTableModel):
     def columnCount(self, parent: QModelIndex = None) -> int:
         return len(self.DATA.DEVS) + 1
 
-    def headerData(self, col: Any, orientation: Qt.Orientation, role: int = None) -> str:
+    def headerData(self, section: Any, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> str:
         if role == Qt.DisplayRole:
             if orientation == Qt.Horizontal:
-                if col == 0:
+                if section == 0:
                     return "NAME"
-                if col > 0:
-                    return f"{col}"
-            elif orientation == Qt.Vertical:
-                return col + 1
-        return QVariant()
+                if section > 0:
+                    return f"{section}"
+            if orientation == Qt.Vertical:
+                return section + 1
 
     def flags(self, index):
         flags = super().flags(index)
