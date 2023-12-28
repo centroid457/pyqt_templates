@@ -324,9 +324,30 @@ class Gui(QWidget):
 
         # GRID --------------------------------------------------------------------------------------------------------
         layout_grid = QGridLayout()
-        layout_grid.setSpacing(2)
-        layout_grid.addWidget(QLabel("1"), 0, 0)
-        layout_grid.addWidget(QLabel("2"), 0, 1)
+
+        # settings --------------------
+        layout_grid.setColumnStretch(1, 2)
+        layout_grid.setRowStretch(2, 2)
+
+        layout_grid.setHorizontalSpacing(2)
+        layout_grid.setVerticalSpacing(1)
+        layout_grid.setSpacing(1)
+
+        layout_grid.setColumnMinimumWidth(0, 100)
+        layout_grid.setRowMinimumHeight(1, 50)
+
+        # wgts ------------------------
+        layout_grid.addWidget(QLabel("00"), 0, 0)
+        layout_grid.addWidget(QLabel("01"), 0, 1)
+        layout_grid.addWidget(QLabel("02"), 0, 2)
+        layout_grid.addWidget(QLabel("03"), 0, 3)
+
+        layout_grid.addWidget(QLabel("10"), 1, 0)
+        layout_grid.addWidget(QLabel("11-12"), 1, 1, 1, 2)
+        layout_grid.addWidget(QLabel("13"), 1, 3)
+
+        layout_grid.addWidget(QLabel("20"), 2, 0)
+        layout_grid.addWidget(QLabel("21-end"), 2, 1, 2, -1)
 
         # layout_main -------------------------------------------------------------------------------------------------
         layout_v = QVBoxLayout()
