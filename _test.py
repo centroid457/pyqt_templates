@@ -29,7 +29,7 @@ class Test__Gui:
     def test__START_GUI(self):
         class Gui_1(Gui):
             TITLE = "[GUI] TEST"
-            SIZE = (300, 100)
+            # SIZE = (300, 100)
 
         with pytest.raises(SystemExit) as exx:
             Gui_1()

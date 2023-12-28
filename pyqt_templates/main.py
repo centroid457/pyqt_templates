@@ -14,13 +14,22 @@ Type__Size = Tuple[Optional[int], Optional[int]]
 
 # TEST CLASSES ========================================================================================================
 class _Row:
-    NAME: str = "Row"
+    NAME: str = "row"
     SKIP: Optional[bool] = None
     result: Optional[bool] = None
 
+    def __init__(self, name: Optional[Any] = None):
+        if name:
+            self.NAME = str(name)
+
 
 class _Dev:
+    NAME: str = "dev"
     result: Optional[bool] = None
+
+    def __init__(self, name: Optional[Any] = None):
+        if name:
+            self.NAME = str(name)
 
 
 class _Data:
@@ -276,7 +285,7 @@ class Gui(QWidget):
         self.BTN_DEBUG.setCheckable(True)
 
     def QTV_create(self) -> None:
-        data = _Data([_Row() for _ in range(5)], [_Dev() for _ in range(4)])
+        data = _Data([_Row(f"row{index}") for index in range(5)], [_Dev(f"dev{index}") for index in range(4)])
         tm = _TableModelTemplate(data)
 
         self.QTV = QTableView()
@@ -327,17 +336,17 @@ class Gui(QWidget):
 
         # layout_main -------------------------------------------------------------------------------------------------
         layout_main = QHBoxLayout()
-        layout_main.addLayout(layout_v)
         layout_main.addWidget(self.QTV)
+        layout_main.addLayout(layout_v)
 
         self.setLayout(layout_main)
 
     def slots_connect(self) -> None:
-        if hasattr(self, "BTN_DEBUG"):
-            self.BTN_DEBUG.toggled.connect(self._btn_debug__toggled)
+        if self.BTN_DEBUG:
+            self.BTN_DEBUG.toggled.connect(self.BTN_DEBUG__toggled)
 
-    def _btn_debug__toggled(self, _state: Optional[bool] = None) -> None:
-        print(f"btn {_state=}")
+    def BTN_DEBUG__toggled(self, state: Optional[bool] = None) -> None:
+        print(f"btn {state=}")
         self._wgt_main__center()
 
     # EVENTS ==========================================================================================================
