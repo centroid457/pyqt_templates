@@ -99,8 +99,8 @@ class _TableModelTemplate(QAbstractTableModel):
         return flags
 
     def data(self, index: QModelIndex, role: int = Qt.DisplayRole) -> Any:
-        if not index.isValid():
-            return QVariant()
+        # if not index.isValid():
+        #     return QVariant()
 
         # PREPARE -----------------------------------------------------------------------------------------------------
         col = index.column()
@@ -145,34 +145,25 @@ class _TableModelTemplate(QAbstractTableModel):
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.FontRole:
-            font = QFont()
+            if row % 2:
+                # QFont("Arial", 9, QFont.Bold)
+                font = QFont()
 
-            font.setBold(True)
-            font.setItalic(True)
+                font.setBold(True)
+                font.setItalic(True)
 
-            font.setOverline(True)      # строка над текстом
-            font.setStrikeOut(True)     # зачеркнутый
-            font.setUnderline(True)     # подчеркнутый
+                font.setOverline(True)      # надчеркнутый
+                font.setStrikeOut(True)     # зачеркнутый
+                font.setUnderline(True)     # подчеркнутый
 
-            # не понял!! --------------------
-            # font.setStretch(5)
-            # font.setCapitalization()
+                # не понял!! --------------------
+                # font.setStretch(5)
+                # font.setCapitalization()
 
-            return font
-
-
-
-
-
-
+                return font
 
         # -------------------------------------------------------------------------------------------------------------
-        if role == Qt.ForegroundRole:
-            if tc.SKIP:
-                return QColor('#a2a2a2')
-
-        # -------------------------------------------------------------------------------------------------------------
-        if role == Qt.BackgroundRole:       # Qt.BackgroundColorRole - не понял в чем разница!!! кажется одно и тоже!
+        if role == Qt.BackgroundRole:   # ЦВЕТ ФОНА=Qt.BackgroundColorRole - не понял разницы!!! кажется одно и тоже!
             if tc.SKIP:
                 return QColor('#f2f2f2')
 
@@ -183,6 +174,11 @@ class _TableModelTemplate(QAbstractTableModel):
                     return QColor("red")
 
         # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.ForegroundRole:   # цвет текста
+            if tc.SKIP:
+                return QColor('#a2a2a2')
+
+        # -------------------------------------------------------------------------------------------------------------
         if role == Qt.CheckStateRole:   # для чекбоксов!
             if col == 0:
                 if tc.SKIP:
@@ -190,12 +186,28 @@ class _TableModelTemplate(QAbstractTableModel):
                 else:
                     return Qt.Checked
 
-    def setData(self, index: QModelIndex, value: Any, role: int = None):
-        if not index.isValid():
-            return
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.ToolTipRole:
+            return f"{row}/{col}"
 
-        row = index.row()
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.DecorationRole:
+            # FIXME: почему-то не работает!!!
+            if col == 2:
+                icon = QIcon()
+                icon.addPixmap(QPixmap('logo.jpg'), QIcon.Normal)
+                return icon
+
+    def setData(self, index: QModelIndex, value: Any, role: Qt.EditRole = None) -> bool:
+        """
+        NOTE: при фактическом изменении ОБЯЗАТЕЛЬНО возвращать TRUE!!! Иначе Exx!!!!
+        """
+        # if not index.isValid():
+        #     return False
+
+        # PREPARE -----------------------------------------------------------------------------------------------------
         col = index.column()
+        row = index.row()
 
         tc = list(self.DATA.ROWS)[row]
         if col > 0:
@@ -203,7 +215,8 @@ class _TableModelTemplate(QAbstractTableModel):
         else:
             dut = None
 
-        if role == Qt.CheckStateRole and col == 0:
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.CheckStateRole and col == 0:      # ЧЕКБОКСЫ
             tc.SKIP = value == Qt.Unchecked
             return True
 
