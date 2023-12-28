@@ -12,6 +12,116 @@ from typing import *
 Type__Size = Tuple[Optional[int], Optional[int]]
 
 
+# TEST CLASSES ========================================================================================================
+class _Row:
+    NAME: str = "Row"
+    SKIP: Optional[bool] = None
+    result: Optional[bool] = None
+
+
+class _Dev:
+    result: Optional[bool] = None
+
+
+class _Data:
+    ROWS: List[_Row] = None
+    DEVS: List[_Dev] = None
+
+    def __init__(self, rows: List[_Row], devs: List[_Dev]):
+        self.ROWS = rows
+        self.DEVS = devs
+
+
+# =====================================================================================================================
+class _TableModelTemplate(QAbstractTableModel):
+    DATA: _Data
+
+    def __init__(self, data: _Data):
+        super().__init__()
+        self.DATA = data
+
+    def rowCount(self, parent: QModelIndex = None) -> int:
+        return len(self.DATA.ROWS)
+
+    def columnCount(self, parent: QModelIndex = None) -> int:
+        return len(self.DATA.DEVS) + 1
+
+    def headerData(self, col: Any, orientation: Qt.Orientation, role: int = None) -> str:
+        if role == Qt.DisplayRole:
+            if orientation == Qt.Horizontal:
+                if col == 0:
+                    return "NAME"
+                if col > 0:
+                    return f"{col}"
+            elif orientation == Qt.Vertical:
+                return col + 1
+        return QVariant()
+
+    def flags(self, index):
+        flags = super().flags(index)
+
+        if index.column() == 0:
+            flags |= Qt.ItemIsUserCheckable
+        return flags
+
+    def data(self, index: QModelIndex, role: int = None) -> Any:
+        if not index.isValid():
+            return QVariant()
+
+        col = index.column()
+        row = index.row()
+
+        tc = list(self.DATA.ROWS)[row]
+        if col > 0:
+            dut = self.DATA.DEVS[col-1]
+        else:
+            dut = None
+
+        if role == Qt.DisplayRole:
+            if col == 0:
+                return f'{tc.NAME}'
+            if col > 0:
+                return f'{dut.result}'
+
+        elif role == Qt.ForegroundRole:
+            if tc.SKIP:
+                return QColor('#a2a2a2')
+
+        elif role == Qt.BackgroundRole:
+            if tc.SKIP:
+                return QColor('#f2f2f2')
+
+            if col > 0:
+                if tc.result is True:
+                    return QColor("green")
+                if tc.result is False:
+                    return QColor("red")
+
+        if role == Qt.CheckStateRole:
+            if col == 0:
+                if tc.SKIP:
+                    return Qt.Unchecked
+                else:
+                    return Qt.Checked
+
+    def setData(self, index: QModelIndex, value: Any, role: int = None):
+        if not index.isValid():
+            return
+
+        row = index.row()
+        col = index.column()
+
+        tc = list(self.DATA.ROWS)[row]
+        if col > 0:
+            dut = self.DATA.DEVS[col-1]
+        else:
+            dut = None
+
+        if role == Qt.CheckStateRole and col == 0:
+            tc.SKIP = value == Qt.Unchecked
+            return True
+
+
 # =====================================================================================================================
 class Gui(QWidget):
     # SETTINGS --------------------------------------------------
@@ -55,6 +165,11 @@ class Gui(QWidget):
 
     # AUXILIARY --------------------------------------------------
     _QAPP: QApplication = QApplication([])
+
+    # COMMON WGTS ------------------------------------------------
+    BTN_DEBUG: Optional[QPushButton] = None
+    QTV: Optional[QTableView] = None
+    QPTE: Optional[QPlainTextEdit] = None
 
     def __init__(self):
         super().__init__()
@@ -155,50 +270,82 @@ class Gui(QWidget):
             display_central_point.y() - window_geometry.height()//2
         )
 
+    # COMMON WGTS =====================================================================================================
+    def BTN_DEBUG_create(self) -> None:
+        self.BTN_DEBUG = QPushButton("DEBUG")
+        self.BTN_DEBUG.setCheckable(True)
+
+    def QTV_create(self) -> None:
+        data = _Data([_Row() for _ in range(5)], [_Dev() for _ in range(4)])
+        tm = _TableModelTemplate(data)
+
+        self.QTV = QTableView()
+        self.QTV.setModel(tm)
+
+        # self.QTV.setStyleSheet("gridline-color: rgb(255, 0, 0)")
+        # self.QTV.setMinimumSize(400, 300)
+        # self.QTV.setShowGrid(True)
+        # self.QTV.setFont(QFont("Calibri (Body)", 12))
+        # self.QTV.setSortingEnabled(True)     # enable sorting
+        self.QTV.resizeColumnsToContents()   # set column width to fit contents
+        # self.QTV.setColumnWidth(0, 100)
+
+        # hh = self.QTV.horizontalHeader()
+        # hh.setStretchLastSection(True)
+
+    def QPTE_create(self) -> None:
+        self.QPTE = QPlainTextEdit()
+        # self.QPTE.setEnabled(True)
+        # self.QPTE.setUndoRedoEnabled(True)
+        # self.QPTE.setReadOnly(True)
+        # self.QPTE.setMaximumBlockCount(15)
+
+        # self.QPTE.clear()
+        self.QPTE.setPlainText("setPlainText")
+        self.QPTE.appendPlainText("appendPlainText")
+        # self.QPTE.appendHtml("")
+        # self.QPTE.anchorAt(#)
+        # self.QPTE.setSizeAdjustPolicy(#)
+
     # WINDOW ==========================================================================================================
     def wgt_create(self) -> None:
+        self.BTN_DEBUG_create()
+        self.QTV_create()
+        self.QPTE_create()
+
         # GRID --------------------------------------------------------------------------------------------------------
         layout_grid = QGridLayout()
         layout_grid.setSpacing(2)
         layout_grid.addWidget(QLabel("1"), 0, 0)
         layout_grid.addWidget(QLabel("2"), 0, 1)
 
-        # ELEMENTS ----------------------------------------------------------------------------------------------------
-        # BTN-----------------------------------------
-        self._btn_debug = QPushButton("DEBUG")
-        self._btn_debug.setCheckable(True)
-
-        # PTE-----------------------------------------
-        self._pte = QPlainTextEdit()
-        # self._pte.setEnabled(True)
-        # self._pte.setUndoRedoEnabled(True)
-        # self._pte.setReadOnly(True)
-        # self._pte.setMaximumBlockCount(15)
-
-        # self._pte.clear()
-        self._pte.setPlainText("setPlainText")
-        self._pte.appendPlainText("appendPlainText")
-        # self._pte.appendHtml("")
-        # self._pte.anchorAt(#)
-        # self._pte.setSizeAdjustPolicy(#)
+        # layout_main -------------------------------------------------------------------------------------------------
+        layout_v = QVBoxLayout()
+        layout_v.addLayout(layout_grid)
+        layout_v.addWidget(self.BTN_DEBUG)
+        layout_v.addWidget(self.QPTE)
 
         # layout_main -------------------------------------------------------------------------------------------------
-        layout_main = QVBoxLayout()
-        layout_main.addLayout(layout_grid)
-        layout_main.addWidget(self._btn_debug)
-        layout_main.addWidget(self._pte)
+        layout_main = QHBoxLayout()
+        layout_main.addLayout(layout_v)
+        layout_main.addWidget(self.QTV)
+
         self.setLayout(layout_main)
 
     def slots_connect(self) -> None:
-        if hasattr(self, "_btn_debug"):
-            self._btn_debug.toggled.connect(self._btn_debug__toggled)
+        if hasattr(self, "BTN_DEBUG"):
+            self.BTN_DEBUG.toggled.connect(self._btn_debug__toggled)
 
     def _btn_debug__toggled(self, _state: Optional[bool] = None) -> None:
         print(f"btn {_state=}")
         self._wgt_main__center()
 
     # EVENTS ==========================================================================================================
-    # events list see in source code!
+    pass    # events list see in source code!
+    pass    # events list see in source code!
+    pass    # events list see in source code!
+    pass    # events list see in source code!
+    pass    # events list see in source code!
 
     # def mouseMoveEvent(self, a0: typing.Optional[QtGui.QMouseEvent]) -> None: ...
 

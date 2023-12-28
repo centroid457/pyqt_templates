@@ -132,16 +132,16 @@ from typing import *
 
 
 # =====================================================================================================================
-class Row:
-    NAME: str = "Row"
+class _Row:
+    NAME: str = "_Row"
     SKIP: Optional[bool] = None
 
 
-class Dev:
+class _Dev:
     result: Optional[bool] = None
 
 
-class Data:
+class _Data:
     ROWS: List = None
     DEVS: List = None
 
@@ -151,10 +151,10 @@ class Data:
 
 
 # =====================================================================================================================
-class MyTableModel(QAbstractTableModel):
-    DATA: Data
+class _TableModelTemplate(QAbstractTableModel):
+    DATA: _Data
 
-    def __init__(self, data: Data):
+    def __init__(self, data: _Data):
         super().__init__()
         self.DATA = data
 
@@ -244,10 +244,10 @@ class MyTableModel(QAbstractTableModel):
 class Gui(QWidget):
     _QAPP: QApplication = QApplication([])
 
-    DATA: Data
+    DATA: _Data
     QTV: QTableView = None
 
-    def __init__(self, data: Data):
+    def __init__(self, data: _Data):
         super().__init__()
         self.DATA = data
 
@@ -268,7 +268,7 @@ class Gui(QWidget):
         self.qtv_create()
 
     def qtv_create(self):
-        tm = MyTableModel(self.DATA)
+        tm = _TableModelTemplate(self.DATA)
 
         self.QTV = QTableView(self)
         self.QTV.setModel(tm)
@@ -290,7 +290,7 @@ class Gui(QWidget):
 
 # =====================================================================================================================
 if __name__ == '__main__':
-    data = Data(list(range(1,5)), list(range(1,4)))
+    data = _Data(list(range(1,5)), list(range(1,4)))
     Gui(data)
 
 
