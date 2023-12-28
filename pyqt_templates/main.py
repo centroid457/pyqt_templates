@@ -533,6 +533,10 @@ class Gui(QWidget):
     def slots_connect(self) -> None:
         if self.BTN_DEBUG:
             self.BTN_DEBUG.toggled.connect(self.BTN_DEBUG__toggled)
+            # self.BTN_DEBUG.clicked.connect(self.BTN_DEBUG__toggled)
+
+        if self.QTV:
+            self.QTV.selectionModel().selectionChanged.connect(lambda z=None, z2=None: print("selectionChanged"))
 
     def BTN_DEBUG__toggled(self, state: Optional[bool] = None) -> None:
         print(f"btn {state=}")
