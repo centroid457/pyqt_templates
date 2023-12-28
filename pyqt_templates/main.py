@@ -9,10 +9,10 @@ from typing import *
 
 
 # =====================================================================================================================
-Type__Size = Tuple[Optional[int], Optional[int]]
+Type__SizeTuple = Tuple[Optional[int], Optional[int]]
 
 
-# TEST CLASSES ========================================================================================================
+# TEST STUFF ==========================================================================================================
 class _Row:
     NAME: str = "row"
     SKIP: Optional[bool] = None
@@ -45,10 +45,18 @@ class _Data:
 class _TableModelTemplate(QAbstractTableModel):
     DATA: _Data
 
+    # METHODS USER ----------------------------------------------------------------------------------------------------
     def __init__(self, data: _Data):
-        super().__init__()
+        super().__init__(parent=None)
         self.DATA = data
 
+    def data_reread(self) -> None:
+        """
+        just redraw model by reread all data!
+        """
+        self.endResetModel()
+
+    # METHODS STD -----------------------------------------------------------------------------------------------------
     def rowCount(self, parent: Any = None, *args, **kwargs) -> int:
         return len(self.DATA.ROWS)
 
@@ -259,6 +267,7 @@ class _TableModelTemplate(QAbstractTableModel):
         if role == Qt.CheckStateRole and col == 0:      # ЧЕКБОКСЫ
             # need used flag ItemIsUserCheckable!
             tc.SKIP = value == Qt.Unchecked
+            self.data_reread()
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.EditRole:
@@ -282,11 +291,11 @@ class Gui(QWidget):
     LOGO: str = "logo.jpg"
     CENTER: bool = True
 
-    SIZE_MINIMUM: Type__Size = (None, None)
-    SIZE_MAXIMUM: Type__Size = (None, None)
-    SIZE_FIXED: Type__Size = (None, None)
-    SIZE: Type__Size = (None, None)
-    MOVE: Type__Size = (None, None)
+    SIZE_MINIMUM: Type__SizeTuple = (None, None)
+    SIZE_MAXIMUM: Type__SizeTuple = (None, None)
+    SIZE_FIXED: Type__SizeTuple = (None, None)
+    SIZE: Type__SizeTuple = (None, None)
+    MOVE: Type__SizeTuple = (None, None)
 
     FLAGS: Dict[Any, str] = {
         # TODO: use separated as CLASS!!! with special FLAG methods!!! sum/del/check/... and try to mark as True/False/None
