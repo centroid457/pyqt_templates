@@ -493,7 +493,7 @@ class Gui(QWidget):
         # GRID --------------------------------------------------------------------------------------------------------
         layout_grid = QGridLayout()
 
-        # settings --------------------
+        # settings ---------------------------------------------
         layout_grid.setColumnStretch(1, 2)
         layout_grid.setRowStretch(2, 2)
 
@@ -504,7 +504,7 @@ class Gui(QWidget):
         layout_grid.setColumnMinimumWidth(0, 100)
         layout_grid.setRowMinimumHeight(1, 50)
 
-        # wgts ------------------------
+        # wgts --------------------------------------------------
         layout_grid.addWidget(QLabel("00"), 0, 0)
         layout_grid.addWidget(QLabel("01"), 0, 1)
         layout_grid.addWidget(QLabel("02"), 0, 2)
