@@ -27,7 +27,7 @@ class PROJECT:
     ]
 
     # NEW VERSION -------------------------------------------
-    VERSION: str = "0.0.1"
+    VERSION: str = "0.0.2"
     NEWS: List[str] = [
         "add ..."
     ]
