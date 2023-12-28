@@ -84,8 +84,7 @@ class _TableModelTemplate(QAbstractTableModel):
         flags |= Qt.ItemIsDropEnabled       # 8=
         flags |= Qt.ItemIsUserCheckable     # 16=для чекбоксов дает возможность их изменять мышью!
         flags |= Qt.ItemIsEnabled           # 32=если нет - будет затенен! без возможности выбора!
-        flags |= Qt.ItemIsAutoTristate      # 64=
-        flags |= Qt.ItemIsTristate          # 64=   так и не понял что это!!!
+        flags |= Qt.ItemIsTristate=ItemIsAutoTristate    # 64=включение промежуточного значения чекбокса
         flags |= Qt.ItemNeverHasChildren    # 128=
         flags |= Qt.ItemIsUserTristate      # 256=
         """
@@ -99,7 +98,7 @@ class _TableModelTemplate(QAbstractTableModel):
             pass
 
         elif index.column() == 0:
-            return Qt.ItemIsEnabled | Qt.ItemIsUserCheckable    #| Qt.ItemIsTristate
+            return Qt.ItemIsEnabled | Qt.ItemIsUserCheckable | Qt.ItemIsTristate
 
         else:
             return Qt.NoItemFlags
@@ -214,14 +213,16 @@ class _TableModelTemplate(QAbstractTableModel):
             VARIANTS CHECK
             --------------
             Unchecked (или 0) - флажок сброшен;
-            PartiallyChecked (или 1) - флажок частично установлен;  -----не смог его увидеть!!!
+            PartiallyChecked (или 1) - флажок частично установлен;
             Checked (или 2) - флажок установлен
             """
             if col == 0:
-                if tc.SKIP:
+                if tc.SKIP is True:
                     return Qt.Unchecked
-                else:
+                elif tc.SKIP is False:
                     return Qt.Checked
+                else:
+                    return Qt.PartiallyChecked
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.ToolTipRole:
@@ -250,6 +251,7 @@ class _TableModelTemplate(QAbstractTableModel):
         NOTE: при фактическом изменении ОБЯЗАТЕЛЬНО возвращать TRUE!!! Иначе Exx!!!!
         in other cases you can return True either, or None!
         """
+        # TODO: ALWAYS START data_reread after any SETDATA
         # if not index.isValid():
         #     return False
 
@@ -264,10 +266,10 @@ class _TableModelTemplate(QAbstractTableModel):
             dut = None
 
         # -------------------------------------------------------------------------------------------------------------
-        if role == Qt.CheckStateRole and col == 0:      # ЧЕКБОКСЫ
+        if role == Qt.CheckStateRole:      # ЧЕКБОКСЫ
             # need used flag ItemIsUserCheckable!
-            tc.SKIP = value == Qt.Unchecked
-            self.data_reread()
+            if col == 0:
+                tc.SKIP = value == Qt.Unchecked
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.EditRole:
@@ -281,6 +283,7 @@ class _TableModelTemplate(QAbstractTableModel):
             print("SizeHintRole")
 
         # -------------------------------------------------------------------------------------------------------------
+        self.data_reread()
         return True
 
 
