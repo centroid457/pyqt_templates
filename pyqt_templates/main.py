@@ -65,11 +65,13 @@ class TableModelTemplate(QAbstractTableModel):
 
     def headerData(self, section: Any, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> str:
         if role == Qt.DisplayRole:
+            # ------------------------------
             if orientation == Qt.Horizontal:
                 if section == 0:
                     return "NAME"
                 if section > 0:
                     return f"{section}"
+            # ------------------------------
             if orientation == Qt.Vertical:
                 return section + 1
 
