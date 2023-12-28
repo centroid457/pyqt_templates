@@ -144,6 +144,29 @@ class _TableModelTemplate(QAbstractTableModel):
             return Qt.AlignCenter
 
         # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.FontRole:
+            font = QFont()
+
+            font.setBold(True)
+            font.setItalic(True)
+
+            font.setOverline(True)      # строка над текстом
+            font.setStrikeOut(True)     # зачеркнутый
+            font.setUnderline(True)     # подчеркнутый
+
+            # не понял!! --------------------
+            # font.setStretch(5)
+            # font.setCapitalization()
+
+            return font
+
+
+
+
+
+
+
+        # -------------------------------------------------------------------------------------------------------------
         if role == Qt.ForegroundRole:
             if tc.SKIP:
                 return QColor('#a2a2a2')
@@ -166,23 +189,6 @@ class _TableModelTemplate(QAbstractTableModel):
                     return Qt.Unchecked
                 else:
                     return Qt.Checked
-
-        # -------------------------------------------------------------------------------------------------------------
-        if role == Qt.FontRole:
-            font = QFont()
-
-            font.setBold(True)
-            font.setItalic(True)
-
-            font.setOverline(True)      # строка над текстом
-            font.setStrikeOut(True)     # зачеркнутый
-            font.setUnderline(True)     # подчеркнутый
-
-            # не понял!! --------------------
-            # font.setStretch(5)
-            # font.setCapitalization()
-
-            return font
 
     def setData(self, index: QModelIndex, value: Any, role: int = None):
         if not index.isValid():
