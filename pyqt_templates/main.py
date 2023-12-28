@@ -50,7 +50,7 @@ class TableModelTemplate(QAbstractTableModel):
         super().__init__(parent=None)
         self.DATA = data
 
-    def data_reread(self) -> None:
+    def _data_reread(self) -> None:
         """
         just redraw model by reread all data!
         """
@@ -283,7 +283,7 @@ class TableModelTemplate(QAbstractTableModel):
             print("SizeHintRole")
 
         # -------------------------------------------------------------------------------------------------------------
-        self.data_reread()
+        self._data_reread()
         return True
 
 
