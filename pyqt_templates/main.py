@@ -467,6 +467,8 @@ class Gui(QWidget):
 
     def QPTE_create(self) -> None:
         self.QPTE = QPlainTextEdit()
+
+        # METHODS ORIGINAL ---------------------------------
         # self.QPTE.setEnabled(True)
         # self.QPTE.setUndoRedoEnabled(True)
         # self.QPTE.setReadOnly(True)
@@ -478,6 +480,9 @@ class Gui(QWidget):
         # self.QPTE.appendHtml("")
         # self.QPTE.anchorAt(#)
         # self.QPTE.setSizeAdjustPolicy(#)
+
+        # METHODS COMMON -----------------------------------
+        self.QPTE.setFont(QFont("Calibri (Body)", 7))
 
     # WINDOW ==========================================================================================================
     def wgt_create(self) -> None:
