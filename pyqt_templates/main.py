@@ -46,7 +46,7 @@ class TableModelTemplate(QAbstractTableModel):
     DATA: _Data
 
     # METHODS USER ----------------------------------------------------------------------------------------------------
-    def __init__(self, data: _Data):
+    def __init__(self, data: _Data = None):
         super().__init__(parent=None)
         self.DATA = data
 
