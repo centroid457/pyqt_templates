@@ -1,1 +1,1 @@
-from .main import *
+from .gui import *
