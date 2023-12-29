@@ -173,15 +173,13 @@ class Gui(QWidget):
     def BTN_create(self) -> None:
         self.BTN = QPushButton("BTN")
 
-        self.BTN.set(True)
-
         # SETTINGS -------------------------
         self.BTN.setText("BTN_mod")
         self.BTN.setToolTip("ToolTip")
 
         self.BTN.setCheckable(True)
         # self.BTN.setChecked(False)
-        # self.BTN.setFlat(True)        # без явного выделения формы кнопки как виджета!!! вид Label!!!  НО нажатия визуализирует как виджет BTN!!!
+        # self.BTN.setFlat(True)        # виджет вида Label!!! НО нажатия визуализирует как виджет BTN!!!
         # self.BTN.setDefault(True)     # кажется выделяет рамкой навсегда среди всех?
 
         # self.BTN.setEnabled(True)
@@ -190,6 +188,7 @@ class Gui(QWidget):
         # self.BTN.setHidden(True)
 
         # GEOMETRY ----------------------
+        # self.BTN.setContentsMargins(1000, 1000, 1000, 1000)     # ничего не дает!!!
         # self.BTN.setSizeIncrement(100, 100)     # не понял!!!
 
         # self.BTN.setMinimumWidth(5)
@@ -217,11 +216,14 @@ class Gui(QWidget):
         # self.BTN.setAutoRepeatInterval(2)
 
         # PROPERTIES ------------------------
-        print(self.BTN.isCheckable())
-        print(self.BTN.isChecked())
-        print(self.BTN.isDown())
-        print(self.BTN.isFlat())
-        print(self.BTN.isHidden())
+        # print(self.BTN.isEnabled())
+        # print(self.BTN.isCheckable())
+        # print(self.BTN.isChecked())
+        # print(self.BTN.isDown())
+        # print(self.BTN.isFlat())
+        # print(self.BTN.isHidden())
+        # print(self.BTN.isVisible())
+        # print(self.BTN.isDefault())
 
     def TV_create(self) -> None:
         # PREPARE ------------------------
