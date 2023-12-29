@@ -173,6 +173,7 @@ class Gui(QWidget):
     def BTN_create(self) -> None:
         self.BTN = QPushButton("BTN")
 
+        self.BTN.set(True)
 
         # SETTINGS -------------------------
         self.BTN.setText("BTN_mod")
@@ -188,12 +189,16 @@ class Gui(QWidget):
         # self.BTN.setVisible(True)
         # self.BTN.setHidden(True)
 
-        # ГЕОМЕТРИЯ ----------------------
+        # GEOMETRY ----------------------
         # self.BTN.setSizeIncrement(100, 100)     # не понял!!!
 
         # self.BTN.setMinimumWidth(5)
         # self.BTN.setMinimumHeight(5)
         # self.BTN.setMinimumSize(5, 5)
+
+        # self.BTN.setMaximumWidth(300)
+        # self.BTN.setMaximumHeight(20)
+        # self.BTN.setMaximumSize(300, 20)
 
         # если это сделать, то расширяться не будет!!!!!
         # self.BTN.setFixedWidth(100)      # in pixels
