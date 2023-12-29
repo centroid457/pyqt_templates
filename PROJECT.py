@@ -23,7 +23,7 @@ class PROJECT:
         "good template for TableView/Model",
     ]
     WISHES: List[str] = [
-        "add Events for QTM/QTV/..."
+        "add Events for TM/TV/..."
     ]
 
     # NEW VERSION -------------------------------------------

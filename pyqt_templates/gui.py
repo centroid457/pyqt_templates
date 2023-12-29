@@ -62,10 +62,10 @@ class Gui(QWidget):
     # COMMON ------------------------------------------------------
     DATA: Optional[Any] = None
 
-    BTN_DEBUG: Optional[QPushButton] = None
-    QTV: Optional[QTableView] = None
-    QTM: Optional[QAbstractTableModel] = None
-    QPTE: Optional[QPlainTextEdit] = None
+    BTN: Optional[QPushButton] = None
+    TV: Optional[QTableView] = None
+    TM: Optional[QAbstractTableModel] = None
+    PTE: Optional[QPlainTextEdit] = None
 
     def __init__(self, data: Optional[Any] = None):
         super().__init__()
@@ -170,56 +170,100 @@ class Gui(QWidget):
         )
 
     # COMMON ==========================================================================================================
-    def BTN_DEBUG_create(self) -> None:
-        self.BTN_DEBUG = QPushButton("DEBUG")
-        self.BTN_DEBUG.setCheckable(True)
+    def BTN_create(self) -> None:
+        self.BTN = QPushButton("BTN")
 
-    def QTV_create(self) -> None:
+
+        # SETTINGS -------------------------
+        self.BTN.setText("BTN_mod")
+        self.BTN.setToolTip("ToolTip")
+
+        self.BTN.setCheckable(True)
+        # self.BTN.setChecked(False)
+        # self.BTN.setFlat(True)        # без явного выделения формы кнопки как виджета!!! вид Label!!!  НО нажатия визуализирует как виджет BTN!!!
+        # self.BTN.setDefault(True)     # кажется выделяет рамкой навсегда среди всех?
+
+        # self.BTN.setEnabled(True)
+        # self.BTN.setDisabled(True)
+        # self.BTN.setVisible(True)
+        # self.BTN.setHidden(True)
+
+        # ГЕОМЕТРИЯ ----------------------
+        # self.BTN.setSizeIncrement(100, 100)     # не понял!!!
+
+        # self.BTN.setMinimumWidth(5)
+        # self.BTN.setMinimumHeight(5)
+        # self.BTN.setMinimumSize(5, 5)
+
+        # если это сделать, то расширяться не будет!!!!!
+        # self.BTN.setFixedWidth(100)      # in pixels
+        # self.BTN.setFixedHeight(20)
+        # self.BTN.setFixedSize(5, 5)
+
+        # OBJECTS ---------------------------
+        # self.BTN.setFont(...)
+
+        # self.BTN.setIcon(...)
+        # self.BTN.setIconSize(...)
+
+        # DONT UNDERSTAND -------------------
+        # self.BTN.setAutoRepeat(True)
+        # self.BTN.setAutoRepeatDelay(2)
+        # self.BTN.setAutoRepeatInterval(2)
+
+        # PROPERTIES ------------------------
+        print(self.BTN.isCheckable())
+        print(self.BTN.isChecked())
+        print(self.BTN.isDown())
+        print(self.BTN.isFlat())
+        print(self.BTN.isHidden())
+
+    def TV_create(self) -> None:
         # PREPARE ------------------------
         if self.DATA is None:
             self.DATA = Data_([Row_(f"row{index}") for index in range(5)], [Dev_(f"dev{index}") for index in range(4)])
 
-        self.QTM = TableModelTemplate(self.DATA)
+        self.TM = TableModelTemplate(self.DATA)
 
         # WORK ---------------------------
-        self.QTV = QTableView()
-        self.QTV.setModel(self.QTM)
+        self.TV = QTableView()
+        self.TV.setModel(self.TM)
 
-        # self.QTV.setStyleSheet("gridline-color: rgb(255, 0, 0)")
-        # self.QTV.setMinimumSize(400, 300)
-        # self.QTV.setShowGrid(True)
-        # self.QTV.setFont(QFont("Calibri (Body)", 12))
-        # self.QTV.setSortingEnabled(True)     # enable sorting
-        self.QTV.resizeColumnsToContents()   # set column width to fit contents
-        # self.QTV.setColumnWidth(0, 100)
+        # self.TV.setStyleSheet("gridline-color: rgb(255, 0, 0)")
+        # self.TV.setMinimumSize(400, 300)
+        # self.TV.setShowGrid(True)
+        # self.TV.setFont(QFont("Calibri (Body)", 12))
+        # self.TV.setSortingEnabled(True)     # enable sorting
+        self.TV.resizeColumnsToContents()   # set column width to fit contents
+        # self.TV.setColumnWidth(0, 100)
 
-        # hh = self.QTV.horizontalHeader()
+        # hh = self.TV.horizontalHeader()
         # hh.setStretchLastSection(True)
 
-    def QPTE_create(self) -> None:
-        self.QPTE = QPlainTextEdit()
+    def PTE_create(self) -> None:
+        self.PTE = QPlainTextEdit()
 
         # METHODS ORIGINAL ---------------------------------
-        # self.QPTE.setEnabled(True)
-        # self.QPTE.setUndoRedoEnabled(True)
-        # self.QPTE.setReadOnly(True)
-        # self.QPTE.setMaximumBlockCount(15)
+        # self.PTE.setEnabled(True)
+        # self.PTE.setUndoRedoEnabled(True)
+        # self.PTE.setReadOnly(True)
+        # self.PTE.setMaximumBlockCount(15)
 
-        # self.QPTE.clear()
-        self.QPTE.setPlainText("setPlainText")
-        self.QPTE.appendPlainText("appendPlainText")
-        # self.QPTE.appendHtml("")
-        # self.QPTE.anchorAt(#)
-        # self.QPTE.setSizeAdjustPolicy(#)
+        # self.PTE.clear()
+        self.PTE.setPlainText("setPlainText")
+        self.PTE.appendPlainText("appendPlainText")
+        # self.PTE.appendHtml("")
+        # self.PTE.anchorAt(#)
+        # self.PTE.setSizeAdjustPolicy(#)
 
         # METHODS COMMON -----------------------------------
-        self.QPTE.setFont(QFont("Calibri (Body)", 7))
+        self.PTE.setFont(QFont("Calibri (Body)", 7))
 
     # WINDOW ==========================================================================================================
     def wgt_create(self) -> None:
-        self.BTN_DEBUG_create()
-        self.QTV_create()
-        self.QPTE_create()
+        self.BTN_create()
+        self.TV_create()
+        self.PTE_create()
 
         # GRID --------------------------------------------------------------------------------------------------------
         layout_grid = QGridLayout()
@@ -251,29 +295,32 @@ class Gui(QWidget):
         # layout_main -------------------------------------------------------------------------------------------------
         layout_v = QVBoxLayout()
         layout_v.addLayout(layout_grid)
-        layout_v.addWidget(self.BTN_DEBUG)
-        layout_v.addWidget(self.QPTE)
+        layout_v.addWidget(self.BTN)
+        layout_v.addWidget(self.PTE)
 
         # layout_main -------------------------------------------------------------------------------------------------
         layout_main = QHBoxLayout()
-        layout_main.addWidget(self.QTV)
+        layout_main.addWidget(self.TV)
         layout_main.addLayout(layout_v)
 
         self.setLayout(layout_main)
 
     # SLOTS ===========================================================================================================
     def slots_connect(self) -> None:
-        if self.BTN_DEBUG:
-            self.BTN_DEBUG.clicked.connect(self._wgt_main__center)
-            self.BTN_DEBUG.toggled.connect(self.BTN_DEBUG__toggled)
+        if self.BTN:
+            self.BTN.clicked.connect(self._wgt_main__center)
+            if self.BTN.isCheckable():
+                self.BTN.toggled.connect(self.BTN__toggled)
+            else:
+                self.BTN.clicked.connect(self.BTN__toggled)
 
-        if self.QTV:
-            self.QTV.selectionModel().selectionChanged.connect(self.QTV_selection_changed)
+        if self.TV:
+            self.TV.selectionModel().selectionChanged.connect(self.TV_selection_changed)
 
-    def BTN_DEBUG__toggled(self, state: Optional[bool] = None) -> None:
+    def BTN__toggled(self, state: Optional[bool] = None) -> None:
         print(f"btn {state=}")
 
-    def QTV_selection_changed(self, first: QItemSelection, last: QItemSelection) -> None:
+    def TV_selection_changed(self, first: QItemSelection, last: QItemSelection) -> None:
         # print("selectionChanged")
         # print(f"{first=}")  # first=<PyQt5.QtCore.QItemSelection object at 0x000001C79A107460>
         # ObjectInfo(first.indexes()[0]).print(_log_iter=True, skip_fullnames=["takeFirst", "takeLast"])
@@ -287,7 +334,7 @@ class Gui(QWidget):
         row = index.row()
         col = index.column()
 
-        self.QPTE.setPlainText(f"{row=}/{col=}")
+        self.PTE.setPlainText(f"{row=}/{col=}")
 
     # EVENTS ==========================================================================================================
     pass    # events list see in source code!
