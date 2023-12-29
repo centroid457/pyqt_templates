@@ -7,46 +7,19 @@ from PyQt5.QtWidgets import *
 
 from typing import *
 
+from .zero_stuff import Row_, Dev_, Data_
+
 
 # =====================================================================================================================
 Type__SizeTuple = Tuple[Optional[int], Optional[int]]
 
 
-# TEST STUFF ==========================================================================================================
-class _Row:
-    NAME: str = "row"
-    SKIP: Optional[bool] = None
-    result: Optional[bool] = None
-
-    def __init__(self, name: Optional[Any] = None):
-        if name:
-            self.NAME = str(name)
-
-
-class _Dev:
-    NAME: str = "dev"
-    result: Optional[bool] = None
-
-    def __init__(self, name: Optional[Any] = None):
-        if name:
-            self.NAME = str(name)
-
-
-class _Data:
-    ROWS: List[_Row] = None
-    DEVS: List[_Dev] = None
-
-    def __init__(self, rows: List[_Row], devs: List[_Dev]):
-        self.ROWS = rows
-        self.DEVS = devs
-
-
 # =====================================================================================================================
 class TableModelTemplate(QAbstractTableModel):
-    DATA: _Data
+    DATA: Data_
 
     # METHODS USER ----------------------------------------------------------------------------------------------------
-    def __init__(self, data: _Data = None):
+    def __init__(self, data: Data_ = None):
         super().__init__(parent=None)
         self.DATA = data
 
@@ -448,7 +421,7 @@ class Gui(QWidget):
         self.BTN_DEBUG.setCheckable(True)
 
     def QTV_create(self) -> None:
-        data = _Data([_Row(f"row{index}") for index in range(5)], [_Dev(f"dev{index}") for index in range(4)])
+        data = Data_([Row_(f"row{index}") for index in range(5)], [Dev_(f"dev{index}") for index in range(4)])
         self.QTM = TableModelTemplate(data)
 
         self.QTV = QTableView()
