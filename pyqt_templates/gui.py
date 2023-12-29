@@ -59,14 +59,19 @@ class Gui(QWidget):
     # AUXILIARY --------------------------------------------------
     _QAPP: QApplication = QApplication([])
 
-    # COMMON WGTS ------------------------------------------------
+    # COMMON ------------------------------------------------------
+    DATA: Optional[Any] = None
+
     BTN_DEBUG: Optional[QPushButton] = None
     QTV: Optional[QTableView] = None
     QTM: Optional[QAbstractTableModel] = None
     QPTE: Optional[QPlainTextEdit] = None
 
-    def __init__(self):
+    def __init__(self, data: Optional[Any] = None):
         super().__init__()
+
+        if data is not None:
+            self.DATA = data
 
         self.wgt_create()
         self.slots_connect()
@@ -164,15 +169,19 @@ class Gui(QWidget):
             display_central_point.y() - window_geometry.height()//2
         )
 
-    # COMMON WGTS =====================================================================================================
+    # COMMON ==========================================================================================================
     def BTN_DEBUG_create(self) -> None:
         self.BTN_DEBUG = QPushButton("DEBUG")
         self.BTN_DEBUG.setCheckable(True)
 
     def QTV_create(self) -> None:
-        data = Data_([Row_(f"row{index}") for index in range(5)], [Dev_(f"dev{index}") for index in range(4)])
-        self.QTM = TableModelTemplate(data)
+        # PREPARE ------------------------
+        if self.DATA is None:
+            self.DATA = Data_([Row_(f"row{index}") for index in range(5)], [Dev_(f"dev{index}") for index in range(4)])
 
+        self.QTM = TableModelTemplate(self.DATA)
+
+        # WORK ---------------------------
         self.QTV = QTableView()
         self.QTV.setModel(self.QTM)
 

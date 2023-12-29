@@ -12,7 +12,7 @@ class TableModelTemplate(QAbstractTableModel):
     DATA: Data_
 
     # METHODS USER ----------------------------------------------------------------------------------------------------
-    def __init__(self, data=None):
+    def __init__(self, data: Optional[Any] = None):
         super().__init__(parent=None)
         self.DATA = data
 
