@@ -4,7 +4,7 @@ Designed for ....
 
 
 ## Features
-1. good template for TableView/Model  
+1. good template for TableView/Model/Signals  
 
 
 ********************************************************************************
