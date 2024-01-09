@@ -7,7 +7,7 @@ TODOS/WISHES
 
 
 
-Signals 
+SignalsTemplate 
 
 0.0.3 (2023-12-29)
 -------------------
