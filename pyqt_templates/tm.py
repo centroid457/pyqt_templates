@@ -45,7 +45,7 @@ class TableModelTemplate(QAbstractTableModel):
         """
         VARIANTS FLAGS
         --------------
-        Qt.NoItemFlags                      # 0=без флагов - полное отключение и деактивация всего
+        flags = Qt.NoItemFlags              # 0=без флагов - полное отключение и деактивация всего
         flags |= Qt.ItemIsSelectable        # 1=выделяется цветом при выборе, иначе только внешней рамкой!
         flags |= Qt.ItemIsEditable          # 2=можно набирать с клавиатуры!
         flags |= Qt.ItemIsDragEnabled       # 4=
@@ -56,20 +56,21 @@ class TableModelTemplate(QAbstractTableModel):
         flags |= Qt.ItemNeverHasChildren    # 128=
         flags |= Qt.ItemIsUserTristate      # 256=
         """
-        flags = super().flags(index)
+        flags = super().flags(index)    # recommended using as default! and switching exact flags
 
-        if index.column() > 0:
-            # flags |= Qt.ItemIsUserCheckable
-            # flags |= Qt.ItemIsEditable
-            # flags |= Qt.ItemIsSelectable
-            # flags |= Qt.ItemIsEnabled
-            pass
+        if index.column() == 0:
+            # FIXME: HEADER CAUSE EXCEPTION CLOSE!
 
-        elif index.column() == 0:
-            return Qt.ItemIsEnabled | Qt.ItemIsUserCheckable | Qt.ItemIsTristate
-
-        else:
-            return Qt.NoItemFlags
+            flags = Qt.NoItemFlags  # 0=без флагов - полное отключение и деактивация всего
+            # flags |= Qt.ItemIsSelectable  # 1=выделяется цветом при выборе, иначе только внешней рамкой!
+            # flags |= Qt.ItemIsEditable  # 2=можно набирать с клавиатуры!
+            # flags |= Qt.ItemIsDragEnabled  # 4=
+            # flags |= Qt.ItemIsDropEnabled  # 8=
+            flags |= Qt.ItemIsUserCheckable  # 16=для чекбоксов дает возможность их изменять мышью!
+            flags |= Qt.ItemIsEnabled  # 32=если нет - будет затенен! без возможности выбора!
+            flags |= Qt.ItemIsTristate  #=ItemIsAutoTristate  # 64=включение промежуточного значения чекбокса
+            # flags |= Qt.ItemNeverHasChildren  # 128=
+            # flags |= Qt.ItemIsUserTristate  # 256=
 
         return flags
 
