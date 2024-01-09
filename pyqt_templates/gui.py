@@ -169,7 +169,53 @@ class Gui(QWidget):
             display_central_point.y() - window_geometry.height()//2
         )
 
-    # COMMON ==========================================================================================================
+    # WINDOW ==========================================================================================================
+    def wgt_create(self) -> None:
+        self.BTN_create()
+        self.TV_create()
+        self.PTE_create()
+
+        # GRID --------------------------------------------------------------------------------------------------------
+        layout_grid = QGridLayout()
+
+        # settings ---------------------------------------------
+        layout_grid.setColumnStretch(1, 2)
+        layout_grid.setRowStretch(2, 2)
+
+        layout_grid.setHorizontalSpacing(2)
+        layout_grid.setVerticalSpacing(1)
+        layout_grid.setSpacing(1)
+
+        layout_grid.setColumnMinimumWidth(0, 100)
+        layout_grid.setRowMinimumHeight(1, 50)
+
+        # wgts --------------------------------------------------
+        layout_grid.addWidget(QLabel("00"), 0, 0)
+        layout_grid.addWidget(QLabel("01"), 0, 1)
+        layout_grid.addWidget(QLabel("02"), 0, 2)
+        layout_grid.addWidget(QLabel("03"), 0, 3)
+
+        layout_grid.addWidget(QLabel("10"), 1, 0)
+        layout_grid.addWidget(QLabel("11-12"), 1, 1, 1, 2)
+        layout_grid.addWidget(QLabel("13"), 1, 3)
+
+        layout_grid.addWidget(QLabel("20"), 2, 0)
+        layout_grid.addWidget(QLabel("21-end"), 2, 1, 2, -1)
+
+        # layout_main -------------------------------------------------------------------------------------------------
+        layout_v = QVBoxLayout()
+        layout_v.addLayout(layout_grid)
+        layout_v.addWidget(self.BTN)
+        layout_v.addWidget(self.PTE)
+
+        # layout_main -------------------------------------------------------------------------------------------------
+        layout_main = QHBoxLayout()
+        layout_main.addWidget(self.TV)
+        layout_main.addLayout(layout_v)
+
+        self.setLayout(layout_main)
+
+    # WGTS ============================================================================================================
     def BTN_create(self) -> None:
         self.BTN = QPushButton("BTN")
 
@@ -265,52 +311,6 @@ class Gui(QWidget):
 
         # METHODS COMMON -----------------------------------
         self.PTE.setFont(QFont("Calibri (Body)", 7))
-
-    # WINDOW ==========================================================================================================
-    def wgt_create(self) -> None:
-        self.BTN_create()
-        self.TV_create()
-        self.PTE_create()
-
-        # GRID --------------------------------------------------------------------------------------------------------
-        layout_grid = QGridLayout()
-
-        # settings ---------------------------------------------
-        layout_grid.setColumnStretch(1, 2)
-        layout_grid.setRowStretch(2, 2)
-
-        layout_grid.setHorizontalSpacing(2)
-        layout_grid.setVerticalSpacing(1)
-        layout_grid.setSpacing(1)
-
-        layout_grid.setColumnMinimumWidth(0, 100)
-        layout_grid.setRowMinimumHeight(1, 50)
-
-        # wgts --------------------------------------------------
-        layout_grid.addWidget(QLabel("00"), 0, 0)
-        layout_grid.addWidget(QLabel("01"), 0, 1)
-        layout_grid.addWidget(QLabel("02"), 0, 2)
-        layout_grid.addWidget(QLabel("03"), 0, 3)
-
-        layout_grid.addWidget(QLabel("10"), 1, 0)
-        layout_grid.addWidget(QLabel("11-12"), 1, 1, 1, 2)
-        layout_grid.addWidget(QLabel("13"), 1, 3)
-
-        layout_grid.addWidget(QLabel("20"), 2, 0)
-        layout_grid.addWidget(QLabel("21-end"), 2, 1, 2, -1)
-
-        # layout_main -------------------------------------------------------------------------------------------------
-        layout_v = QVBoxLayout()
-        layout_v.addLayout(layout_grid)
-        layout_v.addWidget(self.BTN)
-        layout_v.addWidget(self.PTE)
-
-        # layout_main -------------------------------------------------------------------------------------------------
-        layout_main = QHBoxLayout()
-        layout_main.addWidget(self.TV)
-        layout_main.addLayout(layout_v)
-
-        self.setLayout(layout_main)
 
     # SLOTS ===========================================================================================================
     def slots_connect(self) -> None:
