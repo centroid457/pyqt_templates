@@ -6,8 +6,9 @@ TODOS/WISHES
 1. add ...
 
 
-
-SignalsTemplate 
+0.0.4 (2024-01-09)
+-------------------
+- add SignalsTemplate 
 
 0.0.3 (2023-12-29)
 -------------------
