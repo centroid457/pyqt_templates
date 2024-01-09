@@ -5,6 +5,10 @@ TODOS/WISHES
 ------------
 1. add ...
 
+
+
+Signals 
+
 0.0.3 (2023-12-29)
 -------------------
 - renames to TM/TV/PTE/
