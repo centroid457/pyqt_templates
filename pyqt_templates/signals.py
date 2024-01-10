@@ -18,6 +18,11 @@ class SignalsTemplate(QObject):
         - use always defined TYPE!
         in this way it will be clearly/direct/expected behaviour and this is only best way!!!
         other variants - could work unobvious and very unexpected (see tests as examples)!!!
+
+    EXCEPTIONS
+    ----------
+    in PyQt you will not get an Exx! just stop the program!
+    1. if your code stops on EMIT() - see the exact target! don't forget use mandatory params!
     """
     pass
     # TYPICAL SIGNALS
