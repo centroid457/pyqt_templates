@@ -1,6 +1,10 @@
-# pyqt_templates
-Pyqt help examples and some other useful objects (overloaded pyqt classes).  
-Designed for ....  
+# pyqt_templates (v0.0.5)
+
+## DESCRIPTION_SHORT
+Pyqt help examples and some other useful objects (overloaded pyqt classes)
+
+## DESCRIPTION_LONG
+Designed for ...
 
 
 ## Features
@@ -32,7 +36,7 @@ from pyqt_templates import *
 ## USAGE EXAMPLES
 See tests and sourcecode for other examples.
 
-******************************
+------------------------------
 ### 1. template-1=IMPORT_BEST.py
 ```python
 import sys
@@ -41,7 +45,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 ```
 
-******************************
+------------------------------
 ### 2. template-2=QAPP_in_cls.py
 ```python
 import sys
