@@ -9,6 +9,7 @@ from typing import *
 
 from .zero_stuff import Row_, Dev_, Data_
 from .tm import TableModelTemplate
+from .th import HeaderViewCB
 
 
 # =====================================================================================================================
@@ -81,7 +82,7 @@ class Gui(QWidget):
         self.show()
         if self.CENTER:
             self._wgt_main__center()
-        exit_code = self._QAPP.exec_()
+        exit_code = self._QAPP.exec()
         if exit_code == 0:
             print(f"[OK]GUI({exit_code=})closed correctly")
         else:
@@ -282,12 +283,6 @@ class Gui(QWidget):
         self.TV = QTableView()
         self.TV.setModel(self.TM)
 
-        # GEOMETRY  ----------
-        # self.TV.setMinimumSize(400, 300)
-        # self.TV.resize(400, 300)
-        # self.TV.setColumnWidth(0, 100)
-        self.TV.resizeColumnsToContents()   # set column width to fit contents
-
         # STYLE -----
         # self.TV.setShowGrid(True)
         # self.TV.setFont(QFont("Calibri (Body)", 12))  # сразу на все!!! и на заголоски и на ячейки
@@ -296,8 +291,20 @@ class Gui(QWidget):
         # self.TV.setSortingEnabled(True)     # enable sorting
 
         # HEADER ---------
+        self.TV.setHorizontalHeader(HeaderViewCB(self.DATA))   # you can add some additional HV object!
+
         # hh = self.TV.horizontalHeader()
         # hh.setStretchLastSection(True)
+        # hh.setSectionsClickable(False)
+        # hh.setSectionsMovable(False)
+        # hh.setVisible(False)
+        # hh.swapSections(1,2)
+
+        # GEOMETRY  ----------
+        # self.TV.setMinimumSize(400, 300)
+        # self.TV.resize(400, 300)
+        # self.TV.setColumnWidth(0, 100)
+        self.TV.resizeColumnsToContents()   # set column width to fit contents - NEED AFTER SetHEADER!!!
 
     def PTE_create(self) -> None:
         self.PTE = QPlainTextEdit()
@@ -328,12 +335,13 @@ class Gui(QWidget):
                 self.BTN.clicked.connect(self.BTN__toggled)
 
         if self.TV:
-            self.TV.selectionModel().selectionChanged.connect(self.TV_selection_changed)
+            self.TV.selectionModel().selectionChanged.connect(self.TV_selectionChanged)
+            # self.TV.horizontalHeader().sectionClicked.connect(self.TV_hh_sectionClicked)
 
     def BTN__toggled(self, state: Optional[bool] = None) -> None:
         print(f"btn {state=}")
 
-    def TV_selection_changed(self, first: QItemSelection, last: QItemSelection) -> None:
+    def TV_selectionChanged(self, first: QItemSelection, last: QItemSelection) -> None:
         # print("selectionChanged")
         # print(f"{first=}")  # first=<PyQt5.QtCore.QItemSelection object at 0x000001C79A107460>
         # ObjectInfo(first.indexes()[0]).print(_log_iter=True, skip_fullnames=["takeFirst", "takeLast"])

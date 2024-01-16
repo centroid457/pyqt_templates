@@ -22,15 +22,17 @@ class TableModelTemplate(QAbstractTableModel):
         """
         self.endResetModel()
 
-    # METHODS STD -----------------------------------------------------------------------------------------------------
+    # =================================================================================================================
     def rowCount(self, parent: Any = None, *args, **kwargs) -> int:
         return len(self.DATA.ROWS)
 
     def columnCount(self, parent: Any = None, *args, **kwargs) -> int:
         return len(self.DATA.DEVS) + 1
 
-    def headerData(self, section: Any, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> str:
-        if role == Qt.DisplayRole:
+    # =================================================================================================================
+    def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> Any:
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.DisplayRole:      # in headerData WORK ONLY DisplayRole!!!
             # ------------------------------
             if orientation == Qt.Horizontal:
                 if section == 0:
@@ -39,8 +41,58 @@ class TableModelTemplate(QAbstractTableModel):
                     return f"{section}"
             # ------------------------------
             if orientation == Qt.Vertical:
-                return section + 1
+                return str(section + 1)
 
+        # # -------------------------------------------------------------------------------------------------------------
+        # if role == Qt.CheckStateRole:      # ЧЕКБОКСЫ
+        #     # -------------------
+        #     dut = None
+        #     if section > 0:
+        #         return Qt.Checked
+        #
+        #         dut = self.DATA.DEVS[section - 1]
+        #
+        #         if section % 2:
+        #             return Qt.Unchecked
+        #         else:
+        #             return Qt.Checked
+
+        # -------------------------------------------------------------------------------------------------------------
+        # if role == Qt.BackgroundColorRole:  # DONT WORK!!!
+        #     return QColor('red')
+        #
+        #     # -------------------
+        #     dut = None
+        #     if section > 1:
+        #         dut = self.DATA.DEVS[section - 1]
+        #         if not hasattr(dut, "SKIP"):
+        #             dut.SKIP = False
+        #
+        #         if not dut.SKIP:
+        #             return QColor('#f2f2f2')
+
+    # def setHeaderData(self, section: int, orientation: Qt.Orientation, value: Any, role: int = Qt.DisplayRole) -> bool:
+    #     # -------------------------------------------------------------------------------------------------------------
+    #     if orientation == Qt.Vertical:
+    #         return super().setHeaderData(section, orientation, value, role)
+    #
+    #     # -------------------------------------------------------------------------------------------------------------
+    #     if orientation == Qt.Horizontal:
+    #         # -------------------
+    #         dut = None
+    #         if section > 0:
+    #             dut = self.DATA.DEVS[section - 1]
+    #
+    #         # -------------------
+    #         if role == Qt.CheckStateRole:      # ЧЕКБОКСЫ
+    #             if section == 1:
+    #                 return "NAME"
+    #             if section > 0:
+    #                 return f"{section}"
+    #
+    #     return True
+
+    # =================================================================================================================
     def flags(self, index: QModelIndex) -> int:
         """
         VARIANTS FLAGS
@@ -74,11 +126,12 @@ class TableModelTemplate(QAbstractTableModel):
 
         return flags
 
+    # =================================================================================================================
     def data(self, index: QModelIndex, role: int = Qt.DisplayRole) -> Any:
         # if not index.isValid():
         #     return QVariant()
         """
-        VARIANTS ROLE
+        ROLES
         -------------
         DisplayRole = 0
         DecorationRole = 1
@@ -108,6 +161,9 @@ class TableModelTemplate(QAbstractTableModel):
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.DisplayRole:
+            if col < 0:
+                print(f"STOP{index=}")
+
             if col == 0:
                 return f'{tc.NAME}'
             if col > 0:
@@ -165,8 +221,8 @@ class TableModelTemplate(QAbstractTableModel):
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.BackgroundColorRole:   # =BackgroundRole
-            if tc.SKIP:
-                return QColor('#f2f2f2')
+            if tc.SKIP or (dut and dut.SKIP):
+                return QColor('#e2e2e2')
 
             if col > 0:
                 if tc.result is True:

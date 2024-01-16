@@ -14,12 +14,15 @@ class Row_:
 
 class Dev_:
     NAME: str = "dev"
+    SKIP: Optional[bool] = None
     result: Optional[bool] = None
 
     def __init__(self, name: Optional[Any] = None):
         if name:
             self.NAME = str(name)
 
+    def SKIP_reverse(self) -> None:
+        self.SKIP = not bool(self.SKIP)
 
 class Data_:
     ROWS: List[Row_] = None
