@@ -11,6 +11,11 @@
 ********************************************************************************
 ## NEWS
 
+0.0.6 (2024/01/16 17:21:43)
+------------------------------
+- fix TvHeaderSelection on nonSelectable column  
+- add HeaderViewCB (Checkboxes for header)  
+
 0.0.5 (2024/01/15 10:46:19)
 ------------------------------
 - apply new pypi template  

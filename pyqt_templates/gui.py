@@ -292,6 +292,7 @@ class Gui(QWidget):
 
         # HEADER ---------
         self.TV.setHorizontalHeader(HeaderViewCB(self.DATA))   # you can add some additional HV object!
+        self.TV.setHea(HeaderViewCB(self.DATA))   # you can add some additional HV object!
 
         # hh = self.TV.horizontalHeader()
         # hh.setStretchLastSection(True)

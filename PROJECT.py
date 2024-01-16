@@ -36,7 +36,7 @@ class PROJECT:
     ]
 
     # HISTORY -----------------------------------------------
-    VERSION: Tuple[int, int, int] = (0, 0, 5)
+    VERSION: Tuple[int, int, int] = (0, 0, 6)
     VERSION_STR: str = ".".join(map(str, VERSION))
     TODO: List[str] = [
         "add Events for TM/TV/PTE/...",
