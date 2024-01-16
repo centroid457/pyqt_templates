@@ -102,10 +102,9 @@ class TableModelTemplate(QAbstractTableModel):
         row = index.row()
 
         tc = list(self.DATA.ROWS)[row]
+        dut = None
         if col > 0:
             dut = self.DATA.DEVS[col-1]
-        else:
-            dut = None
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.DisplayRole:

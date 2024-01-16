@@ -47,6 +47,8 @@ class PROJECT:
     ]
     NEWS: List[str] = [
         "apply new pypi template",
+        "fix TvHeaderVelection on nonSelectable column",
+        # "HeaderViewCB",
     ]
 
 

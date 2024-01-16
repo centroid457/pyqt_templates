@@ -338,11 +338,16 @@ class Gui(QWidget):
         # print(f"{first=}")  # first=<PyQt5.QtCore.QItemSelection object at 0x000001C79A107460>
         # ObjectInfo(first.indexes()[0]).print(_log_iter=True, skip_fullnames=["takeFirst", "takeLast"])
 
+        # print(f"{first=}")
+
         if not first:
             print(f"selected first NotSelectable Index {first=}")
             return
 
-        index: QModelIndex = first.indexes()[0]
+        try:
+            index: QModelIndex = first.indexes()[0]
+        except:
+            return
 
         row = index.row()
         col = index.column()
