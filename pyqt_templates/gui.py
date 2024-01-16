@@ -282,14 +282,20 @@ class Gui(QWidget):
         self.TV = QTableView()
         self.TV.setModel(self.TM)
 
-        # self.TV.setStyleSheet("gridline-color: rgb(255, 0, 0)")
+        # GEOMETRY  ----------
         # self.TV.setMinimumSize(400, 300)
-        # self.TV.setShowGrid(True)
-        # self.TV.setFont(QFont("Calibri (Body)", 12))
-        # self.TV.setSortingEnabled(True)     # enable sorting
-        self.TV.resizeColumnsToContents()   # set column width to fit contents
+        # self.TV.resize(400, 300)
         # self.TV.setColumnWidth(0, 100)
+        self.TV.resizeColumnsToContents()   # set column width to fit contents
 
+        # STYLE -----
+        # self.TV.setShowGrid(True)
+        # self.TV.setFont(QFont("Calibri (Body)", 12))  # сразу на все!!! и на заголоски и на ячейки
+        # self.TV.setStyleSheet("gridline-color: rgb(255, 0, 0)")
+
+        # self.TV.setSortingEnabled(True)     # enable sorting
+
+        # HEADER ---------
         # hh = self.TV.horizontalHeader()
         # hh.setStretchLastSection(True)
 
