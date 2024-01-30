@@ -1,5 +1,7 @@
 import sys
+import time
 import pathlib
+import threading
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -82,7 +84,17 @@ class Gui(QWidget):
         self.show()
         if self.CENTER:
             self._wgt_main__center()
+
+        # starting PYQT in thread - NOT AVAILABLE!!! ---------------------------
+        # i tried switch all even show() into it - not working!
+        # thread = threading.Thread(target=self.run)
+        # thread.start()
+        # thread.join()
+        self.run()
+
+    def run(self):
         exit_code = self._QAPP.exec()
+        # time.sleep(5)
         if exit_code == 0:
             print(f"[OK]GUI({exit_code=})closed correctly")
         else:
