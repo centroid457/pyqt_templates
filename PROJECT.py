@@ -47,6 +47,7 @@ class PROJECT:
     ]
     NEWS: List[str] = [
         "apply new ver pypi templates",
+        "add START attr"
     ]
 
     # FINALIZE -----------------------------------------------

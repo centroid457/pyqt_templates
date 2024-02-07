@@ -21,6 +21,8 @@ Type__SizeTuple = Tuple[Optional[int], Optional[int]]
 # =====================================================================================================================
 class Gui(QWidget):
     # SETTINGS --------------------------------------------------
+    START: bool = True
+
     TITLE: str = "[GUI] Template"
     LOGO: str = "logo.jpg"
     CENTER: bool = True
@@ -76,6 +78,10 @@ class Gui(QWidget):
         if data is not None:
             self.DATA = data
 
+        if self.START:
+            self.run()
+
+    def run(self):
         self.wgt_create()
         self.slots_connect()
 
@@ -90,9 +96,7 @@ class Gui(QWidget):
         # thread = threading.Thread(target=self.run)
         # thread.start()
         # thread.join()
-        self.run()
 
-    def run(self):
         exit_code = self._QAPP.exec()
         # time.sleep(5)
         if exit_code == 0:
