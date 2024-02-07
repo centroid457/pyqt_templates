@@ -1,11 +1,13 @@
 from typing import *
+from _aux__release_files import release_files_update
+
+
+# =====================================================================================================================
+VERSION = (0, 0, 3)   # 1/deprecate _VERSION_TEMPLATE from PRJ object +2/place update_prj here in __main__ +3/separate finalize attrs
 
 
 # =====================================================================================================================
 class PROJECT:
-    # AUX --------------------------------------------------
-    _VERSION_TEMPLATE: Tuple[int] = (0, 0, 2)
-
     # MAIN -------------------------------------------------
     AUTHOR_NAME: str = "Andrei Starichenko"
     AUTHOR_EMAIL: str = "centroid@mail.ru"
@@ -13,7 +15,6 @@ class PROJECT:
 
     # PROJECT ----------------------------------------------
     NAME_IMPORT: str = "pyqt_templates"
-    NAME_INSTALL: str = NAME_IMPORT.replace("_", "-")
     KEYWORDS: List[str] = [
         "pyqt",
         "pyqt templates", "pyqt guide",
@@ -37,7 +38,6 @@ class PROJECT:
 
     # HISTORY -----------------------------------------------
     VERSION: Tuple[int, int, int] = (0, 0, 6)
-    VERSION_STR: str = ".".join(map(str, VERSION))
     TODO: List[str] = [
         "add Events for TM/TV/PTE/...",
 
@@ -46,14 +46,17 @@ class PROJECT:
         "..."
     ]
     NEWS: List[str] = [
-        "fix TvHeaderSelection on nonSelectable column",
-        "add HeaderViewCB (Checkboxes for header)",
+        "apply new ver pypi templates",
     ]
+
+    # FINALIZE -----------------------------------------------
+    VERSION_STR: str = ".".join(map(str, VERSION))
+    NAME_INSTALL: str = NAME_IMPORT.replace("_", "-")
 
 
 # =====================================================================================================================
 if __name__ == '__main__':
-    pass
+    release_files_update(PROJECT)
 
 
 # =====================================================================================================================
