@@ -4,12 +4,21 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+from funcs_aux import NamesIndexed_Base, NamesIndexed_Templated
+
 from .zero_stuff import Data_
+
+
+# =====================================================================================================================
+class Headers(NamesIndexed_Base):
+    NAME = 0
+    BATCH = NamesIndexed_Templated(1, 4)
 
 
 # =====================================================================================================================
 class TableModelTemplate(QAbstractTableModel):
     DATA: Data_
+    HEADERS: NamesIndexed_Base = Headers()
 
     # METHODS USER ----------------------------------------------------------------------------------------------------
     def __init__(self, data: Optional[Any] = None):
@@ -35,11 +44,8 @@ class TableModelTemplate(QAbstractTableModel):
         if role == Qt.DisplayRole:      # in headerData WORK ONLY DisplayRole!!!
             # ------------------------------
             if orientation == Qt.Horizontal:
-                if section == 0:
-                    return "NAME"
-                if section > 0:
-                    return f"{section}"
-            # ------------------------------
+                return self.HEADERS[section]
+
             if orientation == Qt.Vertical:
                 return str(section + 1)
 
@@ -108,9 +114,12 @@ class TableModelTemplate(QAbstractTableModel):
         flags |= Qt.ItemNeverHasChildren    # 128=
         flags |= Qt.ItemIsUserTristate      # 256=
         """
+        col = index.column()
+        row = index.row()
+
         flags = super().flags(index)    # recommended using as default! and switching exact flags
 
-        if index.column() == 0:
+        if col == 0:
             # FIXME: HEADER CAUSE EXCEPTION CLOSE!
 
             flags = Qt.NoItemFlags  # 0=без флагов - полное отключение и деактивация всего
@@ -156,17 +165,16 @@ class TableModelTemplate(QAbstractTableModel):
 
         tc = list(self.DATA.ROWS)[row]
         dut = None
-        if col > 0:
+        if col in self.HEADERS.BATCH:
             dut = self.DATA.DEVS[col-1]
 
         # -------------------------------------------------------------------------------------------------------------
         if role == Qt.DisplayRole:
             if col < 0:
                 print(f"STOP{index=}")
-
             if col == 0:
                 return f'{tc.NAME}'
-            if col > 0:
+            if col in self.HEADERS.BATCH:
                 return f'{dut.result}'
 
         # -------------------------------------------------------------------------------------------------------------
@@ -197,7 +205,7 @@ class TableModelTemplate(QAbstractTableModel):
             """
             if col == 0:
                 return Qt.AlignVCenter
-            if col > 0:
+            if col in self.HEADERS.BATCH:
                 return Qt.AlignCenter
 
         # -------------------------------------------------------------------------------------------------------------
@@ -224,7 +232,7 @@ class TableModelTemplate(QAbstractTableModel):
             if tc.SKIP or (dut and dut.SKIP):
                 return QColor('#e2e2e2')
 
-            if col > 0:
+            if col in self.HEADERS.BATCH:
                 if tc.result is True:
                     return QColor("green")
                 if tc.result is False:
@@ -271,7 +279,7 @@ class TableModelTemplate(QAbstractTableModel):
             1. meaning like MinimumSize!
             2. BUT if there are IconOrCheck exists - size will be same as before adding it and HIDING oversized text
             """
-            if col > 1:
+            if col in self.HEADERS.BATCH:
                 return QSize(5, 5)
 
     def setData(self, index: QModelIndex, value: Any, role: int = Qt.EditRole) -> bool:
@@ -288,7 +296,7 @@ class TableModelTemplate(QAbstractTableModel):
         row = index.row()
 
         tc = list(self.DATA.ROWS)[row]
-        if col > 0:
+        if col in self.HEADERS.BATCH:
             dut = self.DATA.DEVS[col-1]
         else:
             dut = None

@@ -37,7 +37,7 @@ class PROJECT:
     ]
 
     # HISTORY -----------------------------------------------
-    VERSION: Tuple[int, int, int] = (0, 0, 7)
+    VERSION: Tuple[int, int, int] = (0, 0, 8)
     TODO: List[str] = [
         "add Events for TM/TV/PTE/...",
 
@@ -46,8 +46,7 @@ class PROJECT:
         "..."
     ]
     NEWS: List[str] = [
-        "apply new ver pypi templates",
-        "add START attr"
+        "[TM] add HEADERS + apply NamesIndexed_Base",
     ]
 
     # FINALIZE -----------------------------------------------

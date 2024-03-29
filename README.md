@@ -1,4 +1,4 @@
-# pyqt_templates (v0.0.7)
+# pyqt_templates (v0.0.8)
 
 ## DESCRIPTION_SHORT
 pyqt help examples and some other useful objects (overloaded pyqt classes)
