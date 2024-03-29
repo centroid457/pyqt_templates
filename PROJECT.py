@@ -47,6 +47,7 @@ class PROJECT:
     ]
     NEWS: List[str] = [
         "[TM] add HEADERS + apply NamesIndexed_Base",
+        "[PYPI] apply last ver"
     ]
 
     # FINALIZE -----------------------------------------------
