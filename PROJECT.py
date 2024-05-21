@@ -37,17 +37,15 @@ class PROJECT:
     ]
 
     # HISTORY -----------------------------------------------
-    VERSION: Tuple[int, int, int] = (0, 0, 8)
+    VERSION: Tuple[int, int, int] = (0, 0, 9)
     TODO: List[str] = [
         "add Events for TM/TV/PTE/...",
-
     ]
     FIXME: List[str] = [
         "..."
     ]
     NEWS: List[str] = [
-        "[TM] add HEADERS + apply NamesIndexed_Base",
-        "[PYPI] apply last ver"
+        "[TM] apply new breeder_str for headers",
     ]
 
     # FINALIZE -----------------------------------------------
