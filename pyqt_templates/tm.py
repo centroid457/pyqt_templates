@@ -4,21 +4,21 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from funcs_aux import NamesIndexed_Base, NamesIndexed_Templated
+from funcs_aux import BreederStrSeries, BreederStrStack
 
 from .zero_stuff import Data_
 
 
 # =====================================================================================================================
-class Headers(NamesIndexed_Base):
-    NAME = 0
-    BATCH = NamesIndexed_Templated(1, 4)
+class Headers(BreederStrStack):
+    NAME: int = 0
+    BATCH: BreederStrSeries = BreederStrSeries(1, 4)
 
 
 # =====================================================================================================================
 class TableModelTemplate(QAbstractTableModel):
     DATA: Data_
-    HEADERS: NamesIndexed_Base = Headers()
+    HEADERS: BreederStrStack = Headers()
 
     # METHODS USER ----------------------------------------------------------------------------------------------------
     def __init__(self, data: Optional[Any] = None):
