@@ -4,8 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from funcs_aux import BreederStrSeries, BreederStrStack
-
+from funcs_aux import *
 from .zero_stuff import Data_
 
 

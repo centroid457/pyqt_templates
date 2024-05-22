@@ -16,7 +16,7 @@
 #
 #     # EXX
 # )
-
+# ---------------------------------------------------------------------------------------------------------------------
 from .gui import (
     # BASE
     Gui,
@@ -41,6 +41,17 @@ from .signals import (
 from .th import (
     # BASE
     HeaderViewCB,
+
+    # AUX
+
+    # TYPES
+
+    # EXX
+)
+from .tm import (
+    # BASE
+    Headers,
+    TableModelTemplate,
 
     # AUX
 

@@ -37,7 +37,7 @@ class PROJECT:
     ]
 
     # HISTORY -----------------------------------------------
-    VERSION: Tuple[int, int, int] = (0, 0, 10)
+    VERSION: Tuple[int, int, int] = (0, 0, 11)
     TODO: List[str] = [
         "add Events for TM/TV/PTE/...",
     ]
@@ -45,10 +45,7 @@ class PROJECT:
         "..."
     ]
     NEWS: List[str] = [
-        "[tests] separate files",
-
-        "[__INIT__.py] fix import",
-        "apply last pypi template",
+        "[__INIT__.py] add all modules",
     ]
 
     # FINALIZE -----------------------------------------------
