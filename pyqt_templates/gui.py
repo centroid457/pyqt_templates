@@ -15,7 +15,7 @@ from .th import HeaderViewCB
 
 
 # =====================================================================================================================
-Type__SizeTuple = Tuple[Optional[int], Optional[int]]
+TYPE__SIZE_TUPLE = Tuple[Optional[int], Optional[int]]
 
 
 # =====================================================================================================================
@@ -27,11 +27,11 @@ class Gui(QWidget):
     LOGO: str = "logo.jpg"
     CENTER: bool = True
 
-    SIZE_MINIMUM: Type__SizeTuple = (None, None)
-    SIZE_MAXIMUM: Type__SizeTuple = (None, None)
-    SIZE_FIXED: Type__SizeTuple = (None, None)
-    SIZE: Type__SizeTuple = (None, None)
-    MOVE: Type__SizeTuple = (None, None)
+    SIZE_MINIMUM: TYPE__SIZE_TUPLE = (None, None)
+    SIZE_MAXIMUM: TYPE__SIZE_TUPLE = (None, None)
+    SIZE_FIXED: TYPE__SIZE_TUPLE = (None, None)
+    SIZE: TYPE__SIZE_TUPLE = (None, None)
+    MOVE: TYPE__SIZE_TUPLE = (None, None)
 
     FLAGS: Dict[Any, str] = {
         # TODO: use separated as CLASS!!! with special FLAG methods!!! sum/del/check/... and try to mark as True/False/None
