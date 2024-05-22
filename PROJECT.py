@@ -37,7 +37,7 @@ class PROJECT:
     ]
 
     # HISTORY -----------------------------------------------
-    VERSION: Tuple[int, int, int] = (0, 0, 9)
+    VERSION: Tuple[int, int, int] = (0, 0, 10)
     TODO: List[str] = [
         "add Events for TM/TV/PTE/...",
     ]
@@ -45,7 +45,10 @@ class PROJECT:
         "..."
     ]
     NEWS: List[str] = [
-        "[TM] apply new breeder_str for headers",
+        "[tests] separate files",
+
+        "[__INIT__.py] fix import",
+        "apply last pypi template",
     ]
 
     # FINALIZE -----------------------------------------------
