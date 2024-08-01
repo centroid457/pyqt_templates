@@ -67,7 +67,7 @@ class PROJECT(PROJECT_BASE):
         "..."
     ]
     NEWS: List[str] = [
-        "[]",
+        "[GUI] add QCheckBox",
         "[PYPI/CICD] add new ver!",
     ]
 

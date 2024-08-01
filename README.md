@@ -1,4 +1,15 @@
-# pyqt_templates (v0.0.11)
+![Ver/TestedPython](https://img.shields.io/pypi/pyversions/pyqt_templates)
+![Ver/Os](https://img.shields.io/badge/os_development-Windows-blue)  
+![repo/Created](https://img.shields.io/github/created-at/centroid457/pyqt_templates)
+![Commit/Last](https://img.shields.io/github/last-commit/centroid457/pyqt_templates)
+![Tests/GitHubWorkflowStatus](https://github.com/centroid457/pyqt_templates/actions/workflows/test_linux.yml/badge.svg)
+![Tests/GitHubWorkflowStatus](https://github.com/centroid457/pyqt_templates/actions/workflows/test_windows.yml/badge.svg)  
+![repo/Size](https://img.shields.io/github/repo-size/centroid457/pyqt_templates)
+![Commit/Count/t](https://img.shields.io/github/commit-activity/t/centroid457/pyqt_templates)
+![Commit/Count/y](https://img.shields.io/github/commit-activity/y/centroid457/pyqt_templates)
+![Commit/Count/m](https://img.shields.io/github/commit-activity/m/centroid457/pyqt_templates)
+
+# pyqt_templates (current v0.1.0/![Ver/Pypi Latest](https://img.shields.io/pypi/v/pyqt_templates?label=pypi%20latest))
 
 ## DESCRIPTION_SHORT
 pyqt help examples and some other useful objects (overloaded pyqt classes)
@@ -34,7 +45,7 @@ from pyqt_templates import *
 
 ********************************************************************************
 ## USAGE EXAMPLES
-See tests and sourcecode for other examples.
+See tests, sourcecode and docstrings for other examples.  
 
 ------------------------------
 ### 1. template-1=IMPORT_BEST.py
