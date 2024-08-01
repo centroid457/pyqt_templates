@@ -297,7 +297,8 @@ class Gui(QWidget):
         # SETTINGS -------------------------
         # self.CB.setText("CB_text")
         self.CB.setText("CB_text")
-        ObjectInfo(self.CB).print()
+        self.CB.setTristate()
+        # ObjectInfo(self.CB).print()
         """
 ==========================================================================================
 ----------OBJECTINFO.PRINT--------------------------------------------------------------------------
@@ -624,7 +625,7 @@ palette             	QPalette    :<PyQt5.QtGui.QPalette object at 0x000001A37596
 pos                 	QPoint      :PyQt5.QtCore.QPoint()
 previousInFocusChain	QCheckBox   :<PyQt5.QtWidgets.QCheckBox object at 0x000001A37592DEA0>
 rect                	QRect       :PyQt5.QtCore.QRect(0, 0, 62, 17)
-saveGeometry        	QByteArray  :b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00\x...
+saveGeometry        	QByteArray  :b'\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00...
 screen              	QScreen     :<PyQt5.QtGui.QScreen object at 0x000001A37592E0E0>
 shortcut            	QKeySequence:<PyQt5.QtGui.QKeySequence object at 0x000001A3759627A0>
 size                	QSize       :PyQt5.QtCore.QSize(2560, 1377)
@@ -728,7 +729,7 @@ windowIconChanged   	TypeError   :TypeError('native Qt signal is not callable')
 windowIconTextChanged	TypeError   :TypeError('native Qt signal is not callable')
 windowTitleChanged  	TypeError   :TypeError('native Qt signal is not callable')
 ==========================================================================================
-"""
+        """
 
     def TV_create(self) -> None:
         # PREPARE ------------------------
@@ -792,12 +793,24 @@ windowTitleChanged  	TypeError   :TypeError('native Qt signal is not callable')
             else:
                 self.BTN.clicked.connect(self.BTN__toggled)
 
+        if self.CB:
+            self.CB.stateChanged.connect(self.CB__changed)
+
         if self.TV:
             self.TV.selectionModel().selectionChanged.connect(self.TV_selectionChanged)
             # self.TV.horizontalHeader().sectionClicked.connect(self.TV_hh_sectionClicked)
 
     def BTN__toggled(self, state: Optional[bool] = None) -> None:
-        print(f"btn {state=}")
+        print(f"BTN__toggled {state=}")
+
+    def CB__changed(self, state: Optional[int] = None) -> None:
+        """
+        :param state:
+            0 - unchecked
+            1 - halfCHecked (only if isTristate)
+            2 - checked (even if not isTristate)
+        """
+        print(f"CB__changed {state=}")
 
     def TV_selectionChanged(self, first: QItemSelection, last: QItemSelection) -> None:
         # print("selectionChanged")
