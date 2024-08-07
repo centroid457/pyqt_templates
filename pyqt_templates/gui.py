@@ -193,11 +193,12 @@ class Gui(QWidget):
         self.CB_create()
         self.TV_create()
         self.PTE_create()
+        self.BTNS_PTE_create()
 
         # GRID --------------------------------------------------------------------------------------------------------
         layout_grid = QGridLayout()
 
-        # settings ---------------------------------------------
+        # settings -----------------------------------
         layout_grid.setColumnStretch(1, 2)
         layout_grid.setRowStretch(2, 2)
 
@@ -208,7 +209,7 @@ class Gui(QWidget):
         layout_grid.setColumnMinimumWidth(0, 100)
         layout_grid.setRowMinimumHeight(1, 50)
 
-        # wgts --------------------------------------------------
+        # wgts ---------------------------------------
         layout_grid.addWidget(QLabel("00"), 0, 0)
         layout_grid.addWidget(QLabel("01"), 0, 1)
         layout_grid.addWidget(QLabel("02"), 0, 2)
@@ -221,11 +222,20 @@ class Gui(QWidget):
         layout_grid.addWidget(QLabel("20"), 2, 0)
         layout_grid.addWidget(QLabel("21-end"), 2, 1, 2, -1)
 
+        # pte_btns -------------------------------------------------------------------------------------------
+        # wgts --------------------------------------
+        # TODO: FINISH WITH BTNS_BLOCK!!!!
+
+        # layout ------------------------------------
+        # layout_h = QHBoxLayout()
+        # layout_h.addWidget(self.)
+
         # layout_main -------------------------------------------------------------------------------------------------
         layout_v = QVBoxLayout()
         layout_v.addLayout(layout_grid)
         layout_v.addWidget(self.CB)
         layout_v.addWidget(self.BTN)
+        # layout_v.addLayout(layout_h)
         layout_v.addWidget(self.PTE)
 
         # layout_main -------------------------------------------------------------------------------------------------
@@ -290,6 +300,17 @@ class Gui(QWidget):
         # print(self.BTN.isHidden())
         # print(self.BTN.isVisible())
         # print(self.BTN.isDefault())
+
+    def BTNS_PTE_create(self) -> None:
+        # TODO: ADD BTNS_BLOCK!!! and apply here!!!
+        # self.BTN_PTE = QPushButton("BTN")
+        #
+        # # SETTINGS -------------------------
+        # self.BTN.setText("BTN_mod")
+        # self.BTN.setToolTip("ToolTip")
+        #
+        # self.BTN.setCheckable(True)
+        pass
 
     def CB_create(self) -> None:
         self.CB = QCheckBox("CB_text")
@@ -785,6 +806,9 @@ windowTitleChanged  	TypeError   :TypeError('native Qt signal is not callable')
         self.PTE.setFont(QFont("Calibri (Body)", 7))
 
         ObjectInfo(self.PTE).print()
+
+        # BODY
+        # body: str = self.PTE.toPlainText()
 
 
 
