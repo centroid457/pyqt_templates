@@ -25,10 +25,10 @@ class Dev_:
         self.SKIP = not bool(self.SKIP)
 
 class Data_:
-    ROWS: List[Row_] = None
-    DEVS: List[Dev_] = None
+    ROWS: list[Row_] = None
+    DEVS: list[Dev_] = None
 
-    def __init__(self, rows: List[Row_], devs: List[Dev_]):
+    def __init__(self, rows: list[Row_], devs: list[Dev_]):
         self.ROWS = rows
         self.DEVS = devs
 

@@ -41,7 +41,7 @@ class PROJECT_BASE:
 class PROJECT(PROJECT_BASE):
     # PROJECT ----------------------------------------------
     NAME_IMPORT: str = "pyqt_templates"
-    KEYWORDS: List[str] = [
+    KEYWORDS: list[str] = [
         "pyqt",
         "pyqt templates", "pyqt guide",
         "pyqt usage", "pyqt examples", "pyqt usage examples", "pyqt help", "pyqt help examples",
@@ -51,7 +51,7 @@ class PROJECT(PROJECT_BASE):
     # add DOUBLE SPACE at the end of all lines! for correct representation in MD-viewers
     DESCRIPTION_SHORT: str = "pyqt help examples and some other useful objects (overloaded pyqt classes)"
     DESCRIPTION_LONG: str = """Designed for ..."""
-    FEATURES: List[str] = [
+    FEATURES: list[str] = [
         # "feat1",
         # ["feat2", "block1", "block2"],
 
@@ -59,14 +59,14 @@ class PROJECT(PROJECT_BASE):
     ]
 
     # HISTORY -----------------------------------------------
-    VERSION: Tuple[int, int, int] = (0, 1, 0)
-    TODO: List[str] = [
+    VERSION: tuple[int, int, int] = (0, 1, 0)
+    TODO: list[str] = [
         "add Events for TM/TV/PTE/...",
     ]
-    FIXME: List[str] = [
+    FIXME: list[str] = [
         "..."
     ]
-    NEWS: List[str] = [
+    NEWS: list[str] = [
         "[GUI] add QCheckBox",
         "[PYPI/CICD] add new ver!",
     ]

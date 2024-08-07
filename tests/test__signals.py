@@ -31,7 +31,7 @@ class Test__Signals:
         class Victim:
             SIGNALS = Signals()
 
-            value: Union[None, int, List[int]] = None
+            value: Union[None, int, list[int]] = None
 
             def __init__(self):
                 self.slots_connect()

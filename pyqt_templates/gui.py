@@ -15,7 +15,7 @@ from .th import HeaderViewCB
 
 
 # =====================================================================================================================
-TYPE__SIZE_TUPLE = Tuple[Optional[int], Optional[int]]
+TYPE__SIZE_TUPLE = tuple[Optional[int], Optional[int]]
 
 
 # =====================================================================================================================
@@ -33,7 +33,7 @@ class Gui(QWidget):
     SIZE: TYPE__SIZE_TUPLE = (None, None)
     MOVE: TYPE__SIZE_TUPLE = (None, None)
 
-    FLAGS: Dict[Any, str] = {
+    FLAGS: dict[Any, str] = {
         # TODO: use separated as CLASS!!! with special FLAG methods!!! sum/del/check/... and try to mark as True/False/None
 
         # UNCOMMENT IF NEEDED!
@@ -783,6 +783,10 @@ windowTitleChanged  	TypeError   :TypeError('native Qt signal is not callable')
 
         # METHODS COMMON -----------------------------------
         self.PTE.setFont(QFont("Calibri (Body)", 7))
+
+        ObjectInfo(self.PTE).print()
+
+
 
     # SLOTS ===========================================================================================================
     def slots_connect(self) -> None:
