@@ -59,7 +59,7 @@ class PROJECT(PROJECT_BASE):
     ]
 
     # HISTORY -----------------------------------------------
-    VERSION: tuple[int, int, int] = (0, 1, 0)
+    VERSION: tuple[int, int, int] = (0, 1, 1)
     TODO: list[str] = [
         "add Events for TM/TV/PTE/...",
     ]
@@ -67,8 +67,7 @@ class PROJECT(PROJECT_BASE):
         "..."
     ]
     NEWS: list[str] = [
-        "[GUI] add QCheckBox",
-        "[PYPI/CICD] add new ver!",
+        "[GUI.btn] zero add TODO: ADD BTNS_BLOCK!!! used to explore PTE!!!",
     ]
 
 

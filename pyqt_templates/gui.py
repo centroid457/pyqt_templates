@@ -302,7 +302,7 @@ class Gui(QWidget):
         # print(self.BTN.isDefault())
 
     def BTNS_PTE_create(self) -> None:
-        # TODO: ADD BTNS_BLOCK!!! and apply here!!!
+        # TODO: ADD BTNS_BLOCK!!! and apply here!!! used to explore PTE!!!
         # self.BTN_PTE = QPushButton("BTN")
         #
         # # SETTINGS -------------------------
