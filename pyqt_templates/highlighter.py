@@ -198,7 +198,7 @@ class StylesMultiline(Styles):
 
 
 # ---------------------------------------------------------------------------------------------------------------------
-class StylesUser(StylesPython):
+class StylesExample(StylesPython):
     RESULT_TRUE: Style = Style(
         FORMAT=format_make("", "", "lightGreen"),
         P_ITEMS=[
@@ -220,24 +220,24 @@ class StylesUser(StylesPython):
 
 
 # =====================================================================================================================
-class PteHighlighter(QSyntaxHighlighter):
+class DocHighlighter(QSyntaxHighlighter):
     # settings --------------------
     STYLES_LINE: Styles = Styles()
-    STYLES_MULTYLINE: Styles = Styles()
+    STYLES_MULTILINE: Styles = Styles()
 
     # aux --------------------
     RULES_LINE: list[tuple[QRegExp, int, QTextCharFormat]] = []
     RULES_MULTILINE: list[tuple[QRegExp, int, QTextCharFormat]] = []
 
-    def __init__(self, document: QTextDocument, styles: Styles = None, styles_multyline: Styles = None):
+    def __init__(self, document: QTextDocument, styles: Styles = None, styles_multiline: Styles = None):
         super().__init__(document)
         if styles:
             self.STYLES_LINE = styles
-        if styles_multyline:
-            self.STYLES_MULTYLINE = styles_multyline
+        if styles_multiline:
+            self.STYLES_MULTILINE = styles_multiline
 
         self.RULES_LINE = self.STYLES_LINE.get_rules()
-        self.RULES_MULTILINE = self.STYLES_MULTYLINE.get_rules()
+        self.RULES_MULTILINE = self.STYLES_MULTILINE.get_rules()
 
     def highlightBlock(self, text, *args) -> None:
         """Применить выделение синтаксиса к данному блоку текста. """
@@ -250,9 +250,9 @@ class PteHighlighter(QSyntaxHighlighter):
                 index = expression.indexIn(text, index + length)
 
         # self.setCurrentBlockState(0)
-        self.apply_multylines(text)
+        self.apply_multiline(text)
 
-    def apply_multylines(self, text):
+    def apply_multiline(self, text):
         for delimiter, in_state, style in self.RULES_MULTILINE:
             if self.previousBlockState() == in_state:
                 start = 0
@@ -344,7 +344,7 @@ def start_example():
     # font.setPointSize(12)
     # PTE.setFont(font)
 
-    highlight = PteHighlighter(PTE.document(), styles=StylesUser(), styles_multyline=StylesMultiline())   # need to keep in not used var!
+    highlight = DocHighlighter(document=PTE.document(), styles=StylesExample(), styles_multiline=StylesMultiline())   # need to keep in not used var!
     PTE.show()
     PTE.setPlainText(EXAMPLE_TEXT)
     print(f"{PTE.document()=}")

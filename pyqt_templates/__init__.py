@@ -45,6 +45,19 @@ from .tm import (
     # TYPES
     # EXX
 )
+from .highlighter import (
+    # BASE
+    format_make,
+    Style,
+    Styles,
+    DocHighlighter,
+    # AUX
+    StylesPython,
+    StylesMultiline,
+    start_example,
+    # TYPES
+    # EXX
+)
 
 # =====================================================================================================================
 
