@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 
 from object_info import *
 from typing import *
+from annot_attrs import *
 
 
 # =====================================================================================================================
@@ -31,6 +32,7 @@ def format_make(color_fg: Any = None, style: str = '', color_bg: Any = None) -> 
     return result
 
 
+# =====================================================================================================================
 class Style(NamedTuple):
     FORMAT: QTextCharFormat
     P_ITEMS: list[str]
@@ -58,8 +60,17 @@ class Style(NamedTuple):
         return [(regexp, self.INDEX, self.FORMAT) for regexp in self.get_regexps()]
 
 
-class Styles(NamedTuple):
-    # PythonSyntax -------------------------------
+# =====================================================================================================================
+class Styles(IterAnnotValues):
+    def get_rules(self) -> list[tuple[QRegExp, int, QTextCharFormat]]:
+        result = []
+        for group in self:
+            result.extend(group.get_rules())
+        return result
+
+
+# =====================================================================================================================
+class StylesPython(Styles):
     KEYWORD: Style = Style(
         FORMAT=format_make('blue'),
         P_ITEMS=[
@@ -185,7 +196,7 @@ class Styles(NamedTuple):
             "True"
         ],
         P_TEMPLATES=[
-            r'.*=\s?%s.*',
+            r'.*=\s*%s.*',
         ],
         INDEX=0,
     )
@@ -195,17 +206,10 @@ class Styles(NamedTuple):
             "False"
         ],
         P_TEMPLATES=[
-            r'.*=\s?%s.*',
+            r'.*=\s*%s.*',
         ],
         INDEX=0,
     )
-
-    # FINAL ----------------------------------------
-    def get_rules(self) -> list[tuple[QRegExp, int, QTextCharFormat]]:
-        result = []
-        for group in self:
-            result.extend(group.get_rules())
-        return result
 
 
 # =====================================================================================================================
@@ -213,9 +217,9 @@ class PythonHighlighter(QSyntaxHighlighter):
     """
     Синтаксические маркеры для языка Python
     """
-    STYLES: Styles = Styles()
-    quotted_3s = Styles().QUOTTED_3S.get_rules()[0]
-    quotted_3d = Styles().QUOTTED_3D.get_rules()[0]
+    STYLES: Styles = StylesPython()
+    quotted_3s = StylesPython().QUOTTED_3S.get_rules()[0]
+    quotted_3d = StylesPython().QUOTTED_3D.get_rules()[0]
 
     RULES: list[tuple[QRegExp, int, QTextCharFormat]]
 
@@ -271,6 +275,23 @@ class PythonHighlighter(QSyntaxHighlighter):
 
 
 # =====================================================================================================================
+EXAMPLE_TEXT = """
+hello # comment привет
+def
+результат =  True  результат =True
+результат =True результат =False
+======
+''' 111''' 222''' 000'''
+123
+pass
+break 
+assert 1 == 2
+if True:
+   return None 123 # hello 123
+   
+"""
+
+
 def start_example():
     app = QApplication([])
     PTE = QPlainTextEdit()
@@ -281,12 +302,16 @@ def start_example():
 
     highlight = PythonHighlighter(PTE.document())   # need to keep in not used var!
     PTE.show()
-    PTE.setPlainText("hello # comment привет\n def \n результат =True  результат =True\n результат =True результат =False \n ====== \n ''' 111''' 222''' ")
+    PTE.setPlainText(EXAMPLE_TEXT)
     print(f"{PTE.document()=}")
-    ObjectInfo(PTE.document()).print()
+    # ObjectInfo(PTE.document()).print()
 
     app.exec_()
 
 
-start_example()
+# =====================================================================================================================
+if __name__ == '__main__':
+    start_example()
+
+
 # =====================================================================================================================
