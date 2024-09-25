@@ -62,6 +62,11 @@ class Style(NamedTuple):
 
 # =====================================================================================================================
 class Styles(IterAnnotValues):
+    """
+    EXAMPLE
+    -------
+    see StylesPython
+    """
     def get_rules(self) -> list[tuple[QRegExp, int, QTextCharFormat]]:
         result = []
         for group in self:
@@ -74,9 +79,12 @@ class StylesPython(Styles):
     KEYWORD: Style = Style(
         FORMAT=format_make('blue'),
         P_ITEMS=[
-            'assert', 'class', 'exec',
+            'assert', 'exec',
             'global', 'import',
             'lambda', 'print', 'del',
+
+            # def
+            'class', "def",
 
             # blocks
             'if', 'for', 'while', 'try', 'from',
@@ -92,9 +100,8 @@ class StylesPython(Styles):
         P_TEMPLATES=[
             r'\b%s\b',
         ],
-        INDEX=0,
     )
-    OPERATOR: Style = Style(
+    OPERATOR_SIGN: Style = Style(
         FORMAT=format_make('red'),
         P_ITEMS=[
             '=',
@@ -109,7 +116,6 @@ class StylesPython(Styles):
         ],
         P_TEMPLATES=[
         ],
-        INDEX=0,
     )
     BRACE: Style = Style(
         FORMAT=format_make('darkGray'),
@@ -118,9 +124,8 @@ class StylesPython(Styles):
         ],
         P_TEMPLATES=[
         ],
-        INDEX=0,
     )
-    DEFCLASS: Style = Style(
+    DEF: Style = Style(
         FORMAT=format_make('black', 'bold'),
         P_ITEMS=[
             "def", "class"
@@ -137,45 +142,6 @@ class StylesPython(Styles):
         P_TEMPLATES=[
             r'\bself\b',
         ],
-        INDEX=0,
-    )
-    STRING: Style = Style(
-        FORMAT=format_make('magenta'),
-        P_ITEMS=[
-        ],
-        P_TEMPLATES=[
-            r'"[^"\\]*(\\.[^"\\]*)*"',
-            r"'[^'\\]*(\\.[^'\\]*)*'",
-        ],
-        INDEX=0,
-    )
-    QUOTTED_3S: Style = Style(
-        FORMAT=format_make('darkMagenta'),
-        P_ITEMS=[
-        ],
-        P_TEMPLATES=[
-            "'''",
-        ],
-        INDEX=1,
-    )
-    QUOTTED_3D: Style = Style(
-        FORMAT=format_make('darkMagenta'),
-        P_ITEMS=[
-        ],
-        P_TEMPLATES=[
-            '"""',
-        ],
-        INDEX=2,
-    )
-    COMMENT: Style = Style(
-        FORMAT=format_make('darkGreen', 'italic'),
-        P_ITEMS=[
-        ],
-        P_TEMPLATES=[
-            # r'#[^\n]*',
-            r'#.*',
-        ],
-        INDEX=0,
     )
     NUMBERS: Style = Style(
         FORMAT=format_make('brown'),
@@ -186,10 +152,50 @@ class StylesPython(Styles):
             r'\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\b',
             r'\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b',
         ],
-        INDEX=0,
+    )
+    COMMENT: Style = Style(
+        FORMAT=format_make('darkGreen', 'italic'),
+        P_ITEMS=[
+        ],
+        P_TEMPLATES=[
+            # r'#[^\n]*',
+            r'#.*',
+        ],
+    )
+    STRING: Style = Style(
+        FORMAT=format_make('magenta'),
+        P_ITEMS=[
+        ],
+        P_TEMPLATES=[
+            r'"[^"\\]*(\\.[^"\\]*)*"',
+            r"'[^'\\]*(\\.[^'\\]*)*'",
+        ],
     )
 
-    # UserSyntax -------------------------------
+
+class StylesMultilines(Styles):
+    STRING_3S: Style = Style(
+        FORMAT=format_make('darkMagenta'),
+        P_ITEMS=[
+        ],
+        P_TEMPLATES=[
+            "'''",
+        ],
+        INDEX=1,
+    )
+    STRING_3D: Style = Style(
+        FORMAT=format_make('darkMagenta'),
+        P_ITEMS=[
+        ],
+        P_TEMPLATES=[
+            '"""',
+        ],
+        INDEX=2,
+    )
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+class StylesUser(StylesPython):
     RESULT_TRUE: Style = Style(
         FORMAT=format_make("", "", "lightGreen"),
         P_ITEMS=[
@@ -198,7 +204,6 @@ class StylesPython(Styles):
         P_TEMPLATES=[
             r'.*=\s*%s.*',
         ],
-        INDEX=0,
     )
     RESULT_FALSE: Style = Style(
         FORMAT=format_make("", "", "red"),
@@ -208,7 +213,6 @@ class StylesPython(Styles):
         P_TEMPLATES=[
             r'.*=\s*%s.*',
         ],
-        INDEX=0,
     )
 
 
@@ -217,78 +221,116 @@ class PythonHighlighter(QSyntaxHighlighter):
     """
     Синтаксические маркеры для языка Python
     """
-    STYLES: Styles = StylesPython()
-    quotted_3s = StylesPython().QUOTTED_3S.get_rules()[0]
-    quotted_3d = StylesPython().QUOTTED_3D.get_rules()[0]
+    # settings --------------------
+    STYLES_LINE: Styles = StylesUser()
+    STYLES_MULTYLINES: Styles = StylesMultilines()
 
-    RULES: list[tuple[QRegExp, int, QTextCharFormat]]
+    # aux --------------------
+    RULES_LINE: list[tuple[QRegExp, int, QTextCharFormat]]
+    RULES_MULTILINES: list[tuple[QRegExp, int, QTextCharFormat]]
 
     def __init__(self, document: QTextDocument, styles: Styles = None):
         QSyntaxHighlighter.__init__(self, document)
         if styles:
-            self.STYLES = styles
+            self.STYLES_LINE = styles
 
-        self.RULES = self.STYLES.get_rules()
+        self.RULES_LINE = self.STYLES_LINE.get_rules()
+        self.RULES_MULTILINES = self.STYLES_MULTYLINES.get_rules()
 
     def highlightBlock(self, text, *args) -> None:
         """Применить выделение синтаксиса к данному блоку текста. """
-        # Сделайте другое форматирование синтаксиса
-        for expression, nth, format in self.RULES:
+        for expression, nth, format in self.RULES_LINE:
             index = expression.indexIn(text, 0)
             while index >= 0:
-                index  = expression.pos(nth)
+                index = expression.pos(nth)
                 length = len(expression.cap(nth))
                 self.setFormat(index, length, format)
                 index = expression.indexIn(text, index + length)
 
-        self.setCurrentBlockState(0)
+        # self.setCurrentBlockState(0)
+        self.apply_multylines(text)
 
-        # Многострочные строки
-        in_multiline = self.match_multiline(text, *self.quotted_3s)
-        if not in_multiline:
-            self.match_multiline(text, *self.quotted_3d)
-
-    def match_multiline(self, text, delimiter, in_state, style):
-        if self.previousBlockState() == in_state:
-            start = 0
-            add = 0
-        else:
-            start = delimiter.indexIn(text)
-            add = delimiter.matchedLength()
-
-        while start >= 0:
-            end = delimiter.indexIn(text, start + add)
-            if end >= add:
-                length = end - start + add + delimiter.matchedLength()
-                self.setCurrentBlockState(0)
+    def apply_multylines(self, text):
+        for delimiter, in_state, style in self.RULES_MULTILINES:
+            if self.previousBlockState() == in_state:
+                start = 0
+                add = 0
             else:
-                self.setCurrentBlockState(in_state)
-                length = len(text) - start + add
+                start = delimiter.indexIn(text)
+                add = delimiter.matchedLength()
 
-            self.setFormat(start, length, style)
-            start = delimiter.indexIn(text, start + length)
+            while start >= 0:
+                end = delimiter.indexIn(text, start + add)
+                if end >= add:
+                    length = end - start + add + delimiter.matchedLength()
+                    self.setCurrentBlockState(0)
+                else:
+                    self.setCurrentBlockState(in_state)
+                    length = len(text) - start + add
 
-        if self.currentBlockState() == in_state:
-            return True
-        else:
-            return False
+                self.setFormat(start, length, style)
+                start = delimiter.indexIn(text, start + length)
+
+            if self.currentBlockState() == in_state:
+                return True
+            else:
+                return False
 
 
 # =====================================================================================================================
 EXAMPLE_TEXT = """
-hello # comment привет
-def
-результат =  True  результат =True
-результат =True результат =False
-======
-''' 111''' 222''' 000'''
-123
-pass
-break 
-assert 1 == 2
-if True:
-   return None 123 # hello 123
-   
+from typing import *
+# привет hello 123
+class Cls:  # привет hello 123
+    attr_dict: dict = {1: "123"}
+    attr_tuple: tuple[Any] = (None, "hello123 123", 'hello123 123')
+    attr_list: list[Any] = [0, "1", '2', '''string''', True, int]
+    def meth(self) -> bool:
+        pass
+
+print(Cls.__annotations__)
+print(Cls().__annotations__)
+{'attr1': <class 'int'>}
+
+# USER ----- =========
+resul=True123
+resul=False 123
+
+# COLLECTIONS ----- =========
+()[]{} ([{
+
+[1,2, 3]
+[
+    1,
+    2,
+]
+
+(1,2, 3)
+(
+    1,
+    2,
+)
+
+{1,2, 3}
+{
+    1,
+    2,
+}
+
+{1: "1", 2: "2"}
+{
+    1: "1":,
+    2: "2"
+}
+
+# TEXT ----- =========
+'''
+'''
+
+'''
+def hello():
+    pass
+
 """
 
 

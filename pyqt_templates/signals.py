@@ -10,7 +10,7 @@ class SignalsTemplate(QObject):
     """
     see tests for usage examples
 
-    RULES
+    RULES_LINE
     -----
     1. try connect and emit it in other classes!
     2. PARAMS
