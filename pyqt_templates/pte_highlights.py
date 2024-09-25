@@ -91,8 +91,11 @@ class StylesPython(Styles):
             'elif', 'else', 'except', 'continue', 'finally',
             'raise', 'return', 'yield', 'break', "pass",
 
-            # operators
+            # operators word
             'is', 'or', 'and', 'in', 'not',
+
+            # types
+            "int", "bool",  # add finish
 
             # values
             'None', 'True', 'False',
@@ -173,7 +176,7 @@ class StylesPython(Styles):
     )
 
 
-class StylesMultilines(Styles):
+class StylesMultiline(Styles):
     STRING_3S: Style = Style(
         FORMAT=format_make('darkMagenta'),
         P_ITEMS=[
@@ -217,25 +220,24 @@ class StylesUser(StylesPython):
 
 
 # =====================================================================================================================
-class PythonHighlighter(QSyntaxHighlighter):
-    """
-    Синтаксические маркеры для языка Python
-    """
+class PteHighlighter(QSyntaxHighlighter):
     # settings --------------------
-    STYLES_LINE: Styles = StylesUser()
-    STYLES_MULTYLINES: Styles = StylesMultilines()
+    STYLES_LINE: Styles = Styles()
+    STYLES_MULTYLINE: Styles = Styles()
 
     # aux --------------------
-    RULES_LINE: list[tuple[QRegExp, int, QTextCharFormat]]
-    RULES_MULTILINES: list[tuple[QRegExp, int, QTextCharFormat]]
+    RULES_LINE: list[tuple[QRegExp, int, QTextCharFormat]] = []
+    RULES_MULTILINE: list[tuple[QRegExp, int, QTextCharFormat]] = []
 
-    def __init__(self, document: QTextDocument, styles: Styles = None):
-        QSyntaxHighlighter.__init__(self, document)
+    def __init__(self, document: QTextDocument, styles: Styles = None, styles_multyline: Styles = None):
+        super().__init__(document)
         if styles:
             self.STYLES_LINE = styles
+        if styles_multyline:
+            self.STYLES_MULTYLINE = styles_multyline
 
         self.RULES_LINE = self.STYLES_LINE.get_rules()
-        self.RULES_MULTILINES = self.STYLES_MULTYLINES.get_rules()
+        self.RULES_MULTILINE = self.STYLES_MULTYLINE.get_rules()
 
     def highlightBlock(self, text, *args) -> None:
         """Применить выделение синтаксиса к данному блоку текста. """
@@ -251,7 +253,7 @@ class PythonHighlighter(QSyntaxHighlighter):
         self.apply_multylines(text)
 
     def apply_multylines(self, text):
-        for delimiter, in_state, style in self.RULES_MULTILINES:
+        for delimiter, in_state, style in self.RULES_MULTILINE:
             if self.previousBlockState() == in_state:
                 start = 0
                 add = 0
@@ -293,8 +295,8 @@ print(Cls().__annotations__)
 {'attr1': <class 'int'>}
 
 # USER ----- =========
-resul=True123
-resul=False 123
+result=True123
+result=False 123
 
 # COLLECTIONS ----- =========
 ()[]{} ([{
@@ -342,7 +344,7 @@ def start_example():
     # font.setPointSize(12)
     # PTE.setFont(font)
 
-    highlight = PythonHighlighter(PTE.document())   # need to keep in not used var!
+    highlight = PteHighlighter(PTE.document(), styles=StylesUser(), styles_multyline=StylesMultiline())   # need to keep in not used var!
     PTE.show()
     PTE.setPlainText(EXAMPLE_TEXT)
     print(f"{PTE.document()=}")
