@@ -33,7 +33,7 @@ def format_make(color_fg: Any = None, style: str = '', color_bg: Any = None) -> 
 
 
 # =====================================================================================================================
-class Style(NamedTuple):
+class HlStyle(NamedTuple):
     FORMAT: QTextCharFormat
     P_ITEMS: list[str]
     P_TEMPLATES: list[str] = [r'%s', ]  # FOR ONE LINE!!!
@@ -61,11 +61,11 @@ class Style(NamedTuple):
 
 
 # =====================================================================================================================
-class Styles(IterAnnotValues):
+class HlStyles(IterAnnotValues):
     """
     EXAMPLE
     -------
-    see StylesPython
+    see HlStylesPython
     """
     def get_rules(self) -> list[tuple[QRegExp, int, QTextCharFormat]]:
         result = []
@@ -75,8 +75,8 @@ class Styles(IterAnnotValues):
 
 
 # =====================================================================================================================
-class StylesPython(Styles):
-    KEYWORD: Style = Style(
+class HlStylesPython(HlStyles):
+    KEYWORD: HlStyle = HlStyle(
         FORMAT=format_make('blue'),
         P_ITEMS=[
             'assert', 'exec',
@@ -104,7 +104,7 @@ class StylesPython(Styles):
             r'\b%s\b',
         ],
     )
-    OPERATOR_SIGN: Style = Style(
+    OPERATOR_SIGN: HlStyle = HlStyle(
         FORMAT=format_make('red'),
         P_ITEMS=[
             '=',
@@ -120,7 +120,7 @@ class StylesPython(Styles):
         P_TEMPLATES=[
         ],
     )
-    BRACE: Style = Style(
+    BRACE: HlStyle = HlStyle(
         FORMAT=format_make('darkGray'),
         P_ITEMS=[
             r'\{', r'\}', r'\(', r'\)', r'\[', r'\]',
@@ -128,7 +128,7 @@ class StylesPython(Styles):
         P_TEMPLATES=[
         ],
     )
-    DEF: Style = Style(
+    DEF: HlStyle = HlStyle(
         FORMAT=format_make('black', 'bold'),
         P_ITEMS=[
             "def", "class"
@@ -138,7 +138,7 @@ class StylesPython(Styles):
         ],
         INDEX=1,
     )
-    SELF: Style = Style(
+    SELF: HlStyle = HlStyle(
         FORMAT=format_make('black', 'italic'),
         P_ITEMS=[
         ],
@@ -146,7 +146,7 @@ class StylesPython(Styles):
             r'\bself\b',
         ],
     )
-    NUMBERS: Style = Style(
+    NUMBERS: HlStyle = HlStyle(
         FORMAT=format_make('brown'),
         P_ITEMS=[
         ],
@@ -156,7 +156,7 @@ class StylesPython(Styles):
             r'\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b',
         ],
     )
-    COMMENT: Style = Style(
+    COMMENT: HlStyle = HlStyle(
         FORMAT=format_make('darkGreen', 'italic'),
         P_ITEMS=[
         ],
@@ -165,7 +165,7 @@ class StylesPython(Styles):
             r'#.*',
         ],
     )
-    STRING: Style = Style(
+    STRING: HlStyle = HlStyle(
         FORMAT=format_make('magenta'),
         P_ITEMS=[
         ],
@@ -176,8 +176,8 @@ class StylesPython(Styles):
     )
 
 
-class StylesMultiline(Styles):
-    STRING_3S: Style = Style(
+class HlStylesMultiline(HlStyles):
+    STRING_3S: HlStyle = HlStyle(
         FORMAT=format_make('darkMagenta'),
         P_ITEMS=[
         ],
@@ -186,7 +186,7 @@ class StylesMultiline(Styles):
         ],
         INDEX=1,
     )
-    STRING_3D: Style = Style(
+    STRING_3D: HlStyle = HlStyle(
         FORMAT=format_make('darkMagenta'),
         P_ITEMS=[
         ],
@@ -198,8 +198,8 @@ class StylesMultiline(Styles):
 
 
 # ---------------------------------------------------------------------------------------------------------------------
-class StylesExample(StylesPython):
-    RESULT_TRUE: Style = Style(
+class HlStylesExample(HlStylesPython):
+    RESULT_TRUE: HlStyle = HlStyle(
         FORMAT=format_make("", "", "lightGreen"),
         P_ITEMS=[
             "True"
@@ -208,7 +208,7 @@ class StylesExample(StylesPython):
             r'.*=\s*%s.*',
         ],
     )
-    RESULT_FALSE: Style = Style(
+    RESULT_FALSE: HlStyle = HlStyle(
         FORMAT=format_make("", "", "red"),
         P_ITEMS=[
             "False"
@@ -220,16 +220,16 @@ class StylesExample(StylesPython):
 
 
 # =====================================================================================================================
-class DocHighlighter(QSyntaxHighlighter):
+class Highlighter(QSyntaxHighlighter):
     # settings --------------------
-    STYLES_LINE: Styles = Styles()
-    STYLES_MULTILINE: Styles = Styles()
+    STYLES_LINE: HlStyles = HlStyles()
+    STYLES_MULTILINE: HlStyles = HlStyles()
 
     # aux --------------------
     RULES_LINE: list[tuple[QRegExp, int, QTextCharFormat]] = []
     RULES_MULTILINE: list[tuple[QRegExp, int, QTextCharFormat]] = []
 
-    def __init__(self, document: QTextDocument, styles: Styles = None, styles_multiline: Styles = None):
+    def __init__(self, document: QTextDocument, styles: HlStyles = None, styles_multiline: HlStyles = None):
         super().__init__(document)
         if styles:
             self.STYLES_LINE = styles
@@ -344,7 +344,7 @@ def start_example():
     # font.setPointSize(12)
     # PTE.setFont(font)
 
-    highlight = DocHighlighter(document=PTE.document(), styles=StylesExample(), styles_multiline=StylesMultiline())   # need to keep in not used var!
+    highlight = Highlighter(document=PTE.document(), styles=HlStylesExample(), styles_multiline=HlStylesMultiline())   # need to keep in not used var!
     PTE.show()
     PTE.setPlainText(EXAMPLE_TEXT)
     print(f"{PTE.document()=}")

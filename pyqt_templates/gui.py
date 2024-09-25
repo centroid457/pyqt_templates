@@ -12,6 +12,7 @@ from typing import *
 from .zero_stuff import Row_, Dev_, Data_
 from .tm import TableModelTemplate
 from .th import HeaderViewCB
+from .highlighter import *
 
 
 # =====================================================================================================================
@@ -72,6 +73,8 @@ class Gui(QWidget):
     TV: Optional[QTableView] = None
     TM: Optional[QAbstractTableModel] = None
     PTE: Optional[QPlainTextEdit] = None
+    HL: Optional[QSyntaxHighlighter] = None
+    HL_STYLES: Optional[HlStyles] = None
 
     def __init__(self, data: Optional[Any] = None):
         super().__init__()
@@ -193,6 +196,7 @@ class Gui(QWidget):
         self.CB_create()
         self.TV_create()
         self.PTE_create()
+        self.HL_create()
         self.BTNS_PTE_create()
 
         # GRID --------------------------------------------------------------------------------------------------------
@@ -805,12 +809,14 @@ windowTitleChanged  	TypeError   :TypeError('native Qt signal is not callable')
         # METHODS COMMON -----------------------------------
         self.PTE.setFont(QFont("Calibri (Body)", 7))
 
-        ObjectInfo(self.PTE).print()
+        # ObjectInfo(self.PTE).print()
 
         # BODY
         # body: str = self.PTE.toPlainText()
 
-
+    def HL_create(self) -> None:
+        if self.HL_STYLES and self.PTE:
+            self.HL = Highlighter(document=self.PTE.document(), styles=self.HL_STYLES)
 
     # SLOTS ===========================================================================================================
     def slots_connect(self) -> None:

@@ -48,12 +48,13 @@ from .tm import (
 from .highlighter import (
     # BASE
     format_make,
-    Style,
-    Styles,
-    DocHighlighter,
+    HlStyle,
+    HlStyles,
+    Highlighter,
     # AUX
-    StylesPython,
-    StylesMultiline,
+    HlStylesPython,
+    HlStylesMultiline,
+    HlStylesExample,
     start_example,
     # TYPES
     # EXX
