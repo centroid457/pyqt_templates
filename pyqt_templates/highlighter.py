@@ -209,7 +209,7 @@ class HlStylesExample(HlStylesPython):
         ],
     )
     RESULT_FALSE: HlStyle = HlStyle(
-        FORMAT=format_make("", "", "red"),
+        FORMAT=format_make("", "", "pink"),
         P_ITEMS=[
             "False"
         ],
