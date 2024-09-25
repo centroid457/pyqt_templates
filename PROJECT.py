@@ -46,6 +46,7 @@ class PROJECT(PROJECT_BASE):
         "pyqt templates", "pyqt guide",
         "pyqt usage", "pyqt examples", "pyqt usage examples", "pyqt help", "pyqt help examples",
         "pyqt signals",
+        "pyqt highlighter",
     ]
     # README --------------------------------------------------
     # add DOUBLE SPACE at the end of all lines! for correct representation in MD-viewers
@@ -59,7 +60,7 @@ class PROJECT(PROJECT_BASE):
     ]
 
     # HISTORY -----------------------------------------------
-    VERSION: tuple[int, int, int] = (0, 1, 3)
+    VERSION: tuple[int, int, int] = (0, 1, 4)
     TODO: list[str] = [
         "add Events for TM/TV/PTE/...",
     ]
@@ -67,7 +68,7 @@ class PROJECT(PROJECT_BASE):
         "..."
     ]
     NEWS: list[str] = [
-        "add fonts.py",
+        "add highlighter.py",
     ]
 
 
