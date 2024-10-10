@@ -40,16 +40,20 @@ class TableModelTemplate(QAbstractTableModel):
     # =================================================================================================================
     def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> Any:
         # -------------------------------------------------------------------------------------------------------------
-        if role == Qt.DisplayRole:      # in headerData WORK ONLY DisplayRole!!!
-            # ------------------------------
+        if role == Qt.DisplayRole:      # in headerData WORK ONLY DisplayRole+TOOLTIP!!!
             if orientation == Qt.Horizontal:
                 return self.HEADERS[section]
 
             if orientation == Qt.Vertical:
                 return str(section + 1)
 
+        # -------------------------------------------------------------------------------------------------------------
+        if role == Qt.ToolTipRole:
+            if orientation == Qt.Horizontal:
+                return self.HEADERS[section]
+
         # # -------------------------------------------------------------------------------------------------------------
-        # if role == Qt.CheckStateRole:      # ЧЕКБОКСЫ
+        # if role == Qt.CheckStateRole:      # ЧЕКБОКСЫ  - IS IT WORK???
         #     # -------------------
         #     dut = None
         #     if section > 0:

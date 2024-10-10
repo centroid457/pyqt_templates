@@ -60,7 +60,7 @@ class PROJECT(PROJECT_BASE):
     ]
 
     # HISTORY -----------------------------------------------
-    VERSION: tuple[int, int, int] = (0, 1, 4)
+    VERSION: tuple[int, int, int] = (0, 1, 5)
     TODO: list[str] = [
         "add Events for TM/TV/PTE/...",
     ]
@@ -68,7 +68,7 @@ class PROJECT(PROJECT_BASE):
         "..."
     ]
     NEWS: list[str] = [
-        "add highlighter.py",
+        "[TM]add tooltips into TV Header Horizontal",
     ]
 
 
