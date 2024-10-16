@@ -9,7 +9,7 @@
 ![Commit/Count/y](https://img.shields.io/github/commit-activity/y/centroid457/pyqt_templates)
 ![Commit/Count/m](https://img.shields.io/github/commit-activity/m/centroid457/pyqt_templates)
 
-# pyqt_templates (current v0.1.5/![Ver/Pypi Latest](https://img.shields.io/pypi/v/pyqt_templates?label=pypi%20latest))
+# pyqt_templates (current v0.1.6/![Ver/Pypi Latest](https://img.shields.io/pypi/v/pyqt_templates?label=pypi%20latest))
 
 ## DESCRIPTION_SHORT
 pyqt help examples and some other useful objects (overloaded pyqt classes)

@@ -61,7 +61,7 @@ class HlStyle(NamedTuple):
 
 
 # =====================================================================================================================
-class HlStyles(IterAnnotValues):
+class HlStyles(AnnotValuesIter):
     """
     EXAMPLE
     -------
